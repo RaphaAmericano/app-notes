@@ -1,5 +1,19 @@
 <!-- NG-ZORRO -->
-<app-navbar></app-navbar>
-<a href="https://github.com/NG-ZORRO/ng-zorro-antd" target="_blank" style="display: flex;align-items: center;justify-content: center;height: 100%;width: 100%;">
-  <img height="300" src="https://img.alicdn.com/tfs/TB1X.qJJgHqK1RjSZFgXXa7JXXa-89-131.svg">
-</a>
+<nz-layout>
+  <nz-header>
+    <app-navbar></app-navbar>
+  </nz-header>
+  <nz-content>
+    <div nz-row>
+        <div nz-col nzSpan="12">
+          <app-note-list></app-note-list>
+        </div>
+        <div nz-col nzSpan="12">
+          <app-note-board></app-note-board>
+        </div> 
+      </div>
+  </nz-content>
+  <nz-footer>
+    <!-- todo -->
+  </nz-footer>  
+</nz-layout>
