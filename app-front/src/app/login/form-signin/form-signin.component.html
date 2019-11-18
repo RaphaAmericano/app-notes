@@ -1,0 +1,35 @@
+<form nz-form [formGroup]="signinForm" (ngSubmit)="submitLogin()">
+        <nz-form-item>
+            <nz-form-control nzErrorTip="Insira seu email">
+                <nz-input-group nzPrefixIcon="user">
+                    <input type="text" nz-input formControlName="userName" placeholder="Nome">
+                </nz-input-group>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-control nzErrorTip="Insira seu email">
+                <nz-input-group nzPrefixIcon="mail">
+                    <input type="email" nz-input formControlName="userEmail" placeholder="Email">
+                </nz-input-group>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-control nzErrorTip="Insira sua senha">
+                <nz-input-group nzPrefixIcon="lock">
+                    <input type="password" nz-input formControlName="userPassword" placeholder="Senha">
+                </nz-input-group>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-control nzErrorTip="Repita sua senha">
+                <nz-input-group nzPrefixIcon="lock">
+                    <input type="password" nz-input formControlName="userPasswordConfirm" placeholder="Confirmar a Senha">
+                </nz-input-group>
+            </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+            <nz-form-control>
+                <button nz-button [nzType]="'primary'">Login</button>
+            </nz-form-control>
+        </nz-form-item>
+    </form>

@@ -3,7 +3,13 @@
   <nz-header>
     <app-navbar></app-navbar>
   </nz-header>
-  <nz-content>
+  <nz-layout>
+    <nz-content>
+      <router-outlet></router-outlet>
+    </nz-content>
+
+
+  <!-- <nz-content>
     <div nz-row>
         <div nz-col nzSpan="12">
           <app-note-list></app-note-list>
@@ -12,7 +18,9 @@
           <app-note-board></app-note-board>
         </div> 
       </div>
-  </nz-content>
+  </nz-content> -->
+  </nz-layout>
+  
   <nz-footer>
     <!-- todo -->
   </nz-footer>  
