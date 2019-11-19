@@ -2,7 +2,6 @@ package com.notes.api.services;
 
 import com.notes.api.daos.UserDAO;
 import com.notes.api.models.User;
-import com.notes.api.repositorys.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

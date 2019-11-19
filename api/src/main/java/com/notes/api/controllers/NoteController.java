@@ -1,7 +1,7 @@
 package com.notes.api.controllers;
 
-import com.notes.api.models.User;
-import com.notes.api.services.UserService;
+import com.notes.api.models.Note;
+import com.notes.api.services.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,16 +12,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 @Controller
-@RequestMapping("users")
-public class UserController {
+@RequestMapping("notes")
+public class NoteController {
 
     @Autowired
-    private UserService userService;
+    private NoteService noteService;
 
     @GetMapping()
-    public ResponseEntity<List<User>> getAllUsers(){
-        List<User> list = userService.getAllUsers();
-        return new ResponseEntity<List<User>>(list, HttpStatus.OK);
+    public ResponseEntity<List<Note>> getAllNotes(){
+        List<Note> list = noteService.getAllNotes();
+        return new ResponseEntity<List<Note>>(list, HttpStatus.OK);
     }
-
 }
