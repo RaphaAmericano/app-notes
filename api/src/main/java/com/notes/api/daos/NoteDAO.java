@@ -30,5 +30,9 @@ public class NoteDAO {
         jdbcTemplate.update(query, note.getId_user(), note.getTexto());
     }
 
+    public void updateNote(Note note){
+        String query = "UPDATE NOTES SET NOTA = ? WHERE ID = ?";
+        jdbcTemplate.update(query, note.getTexto(), note.getId());
+    }
 
 }

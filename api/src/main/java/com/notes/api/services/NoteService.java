@@ -20,4 +20,8 @@ public class NoteService {
         return true;
     }
 
+    public synchronized boolean updateNote(Note note ){
+        noteDAO.updateNote(note);
+        return true;
+    }
 }

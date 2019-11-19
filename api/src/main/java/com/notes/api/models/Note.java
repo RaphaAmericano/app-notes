@@ -10,6 +10,7 @@ public class Note {
     private int id_user;
     private String texto;
     private Date data_criacao;
+    private Date data_edicao;
 
     public int getId() {
         return id;
@@ -41,5 +42,13 @@ public class Note {
 
     public void setData_criacao(Date data_criacao) {
         this.data_criacao = data_criacao;
+    }
+
+    public Date getData_edicao() {
+        return data_edicao;
+    }
+
+    public void setData_edicao(Date data_edicao) {
+        this.data_edicao = data_edicao;
     }
 }
