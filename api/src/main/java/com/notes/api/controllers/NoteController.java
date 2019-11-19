@@ -23,6 +23,18 @@ public class NoteController {
         return new ResponseEntity<List<Note>>(list, HttpStatus.OK);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Note> getNoteById(@PathVariable("id") int id ){
+        Note note = noteService.getNoteById(id);
+        return new ResponseEntity<Note>(note, HttpStatus.OK);
+    }
+
+    @GetMapping("/user/{id}")
+    public ResponseEntity<List<Note>> getAllNotesByUserId(@PathVariable("id") int id ){
+        List<Note> list = noteService.getAllNotesByUserId(id);
+        return new ResponseEntity<List<Note>>(list, HttpStatus.OK);
+    }
+
     @PostMapping()
     public ResponseEntity<Void> addUNote(@RequestBody Note note ){
         boolean flag = noteService.addNote(note);

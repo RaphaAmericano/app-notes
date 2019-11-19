@@ -15,6 +15,10 @@ public class NoteService {
 
     public List<Note> getAllNotes(){ return noteDAO.getAllNotes(); }
 
+    public Note getNoteById(int id){ return noteDAO.getNoteById(id); }
+
+    public List<Note> getAllNotesByUserId(int id){ return noteDAO.getAllNotesByUserId(id); }
+
     public synchronized boolean addNote(Note note){
         noteDAO.addNote(note);
         return true;
