@@ -23,7 +23,6 @@ public class UserDAO {
 
     public List<User> getAllUsers(){
         String query = "SELECT * FROM USERS";
-        //RowMapper<User> rowMapper = new BeanPropertyRowMapper<User>(User.class);
         RowMapper<User> rowMapper = new UserMapper();
         return this.jdbcTemplate.query(query, rowMapper);
     }
@@ -32,7 +31,11 @@ public class UserDAO {
 //
 //    User listarPorId(int id);
 //
-//    User cadastrar(User user);
+    public void insertUser(User user){
+           String query = "INSERT INTO USERS(NOME, EMAIL, SENHA) VALUES(?, ?, ?)";
+            jdbcTemplate.update(query, user.getNome(), user.getEmail(), user.getSenha());
+
+    }
 //
 //    User atualizar(User user);
 //

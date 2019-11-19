@@ -14,4 +14,5 @@ public class NoteService {
     private NoteDAO noteDAO;
 
     public List<Note> getAllNotes(){ return noteDAO.getAllNotes(); }
+
 }

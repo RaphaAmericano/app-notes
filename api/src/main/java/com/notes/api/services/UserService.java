@@ -16,6 +16,11 @@ public class UserService {
     public List<User> getAllUsers(){
         return userDAO.getAllUsers();
     }
+
+    public synchronized boolean addUser(User user){
+        userDAO.insertUser(user);
+        return true;
+    }
 //    @Autowired
 //    private UserRepository userRepository;
 //
