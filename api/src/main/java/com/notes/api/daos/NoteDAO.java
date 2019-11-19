@@ -25,4 +25,10 @@ public class NoteDAO {
         return this.jdbcTemplate.query(query, rowMapper);
     }
 
+    public void addNote(Note note){
+        String query = "INSERT INTO NOTES (ID_USUARIO, NOTA) VALUES (?, ?)";
+        jdbcTemplate.update(query, note.getId_user(), note.getTexto());
+    }
+
+
 }

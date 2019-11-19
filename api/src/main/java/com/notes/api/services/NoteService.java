@@ -15,4 +15,9 @@ public class NoteService {
 
     public List<Note> getAllNotes(){ return noteDAO.getAllNotes(); }
 
+    public synchronized boolean addNote(Note note){
+        noteDAO.addNote(note);
+        return true;
+    }
+
 }
