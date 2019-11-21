@@ -35,4 +35,14 @@ public class UserController {
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
+    @PostMapping("check")
+    public ResponseEntity<String> checkUser(@RequestBody User user){
+        String userCheck = userService.checkUser(user);
+        if(userCheck == null){
+            return new ResponseEntity<String>("Erro",  HttpStatus.CONFLICT);
+        }
+        return new ResponseEntity<String>(userCheck, HttpStatus.OK);
+    }
+
+
 }

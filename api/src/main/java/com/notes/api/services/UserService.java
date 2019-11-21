@@ -21,6 +21,22 @@ public class UserService {
         userDAO.insertUser(user);
         return true;
     }
+
+    public synchronized String checkUser( User user){
+        String retorno;
+        User userCheckEmail = userDAO.getByEmail(user.getEmail());
+        User userCheckPassword = userDAO.getByPassword(user.getSenha());
+
+        if( userCheckEmail == null || !userCheckEmail.getEmail().equals(user.getEmail()) ){
+            retorno = "Email Inexistente";
+            return retorno;
+        }
+        if( userCheckPassword == null || !userCheckPassword.getSenha().equals(user.getSenha())){
+            retorno = "Senha Inválida";
+            return retorno;
+        }
+        return "Ok";
+    }
 //    @Autowired
 //    private UserRepository userRepository;
 //
