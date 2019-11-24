@@ -20,15 +20,16 @@ export class NoteHttpService {
 
   constructor( private http:HttpClient ) { }
   
-  public postNewUser(user: User): Observable<any> {
-    
-    console.log(user);
-    console.log(httpOptions);
-    return this.http.post<User>(`/api/users/`, user);
+  public postNewUser(user: User): Observable<any> {    
+    return this.http.post<User>(`/api/users/`, user, httpOptions);
   }
 
-  public checkUser(user:User){
-    return this.http.post<User>("/api/check", user, httpOptions);
+  public checkUser(user:User): Observable<any>{
+    return this.http.post<User>(`/api/users/check`, user, httpOptions);
+  }
+
+  public checkEmail(user:User | string ) : Observable<any> {
+    return this.http.post<User | string>(`/api/users/check/email`, user, httpOptions);
   }
 
 }

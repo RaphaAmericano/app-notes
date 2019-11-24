@@ -17,7 +17,7 @@ export class FormSigninComponent implements OnInit {
   ngOnInit() {
     this.signinForm = this.formBuilder.group({
       userName:[null, [Validators.required]],
-      userEmail:[null, [Validators.required]],
+      userEmail:[null, [Validators.email,Validators.required]],
       userPassword:[null, [Validators.required]],
       userPasswordConfirm:[null, [Validators.required]]
     })
@@ -28,13 +28,18 @@ export class FormSigninComponent implements OnInit {
     user.nome = this.signinForm.value.userName;
     user.email = this.signinForm.value.userEmail;
     user.senha = this.signinForm.value.userPassword;
-    this.http.postNewUser(user).toPromise().then(
-      (res) => {
-        console.log(res);
+    this.http.postNewUser(user).subscribe(
+      (data)=>{
+        console.log(data);
+         
+      },(error) => {
+        console.log(error);
       }
     );
   }
-
+  public resetForm(): void {
+    this.signinForm.reset();
+  }
   
 
   //todo: validator para a senha e confirmar senha
