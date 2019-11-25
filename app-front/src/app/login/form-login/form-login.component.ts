@@ -19,13 +19,13 @@ export class FormLoginComponent implements OnInit {
 
   constructor(private formBuilder:FormBuilder, 
               private service:NoteHttpService, 
-              private noteValidatores:NotesValidatorsService, 
+              private noteValidators:NotesValidatorsService, 
               private routerBuider:Router,
               private authService:AuthService) { }
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
-      userEmail:[null, [Validators.email, Validators.required], [this.noteValidatores.emailCheckValidator()]],
+      userEmail:[null, [Validators.email, Validators.required], [this.noteValidators.emailCheckValidator(false)]],
       userPassword:[null, [Validators.required, Validators.minLength(3)]]
     });
   }

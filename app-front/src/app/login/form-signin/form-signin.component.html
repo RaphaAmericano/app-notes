@@ -1,36 +1,40 @@
 <form nz-form [formGroup]="signinForm" (ngSubmit)="submitSignIn()">
         <nz-form-item>
-            <nz-form-control nzErrorTip="Insira seu email">
+            <nz-form-control nzErrorTip="{{mensagemErro.nome}}">
                 <nz-input-group nzPrefixIcon="user">
                     <input type="text" nz-input formControlName="userName" placeholder="Nome">
                 </nz-input-group>
             </nz-form-control>
         </nz-form-item>
         <nz-form-item>
-            <nz-form-control nzErrorTip="Insira seu email">
+            <nz-form-control nzErrorTip="{{ mensagemErro.email }}">
                 <nz-input-group nzPrefixIcon="mail">
                     <input type="email" nz-input formControlName="userEmail" placeholder="Email">
                 </nz-input-group>
             </nz-form-control>
         </nz-form-item>
-        <nz-form-item>
-            <nz-form-control nzErrorTip="Insira sua senha">
-                <nz-input-group nzPrefixIcon="lock">
-                    <input type="password" nz-input formControlName="userPassword" placeholder="Senha">
-                </nz-input-group>
-            </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-            <nz-form-control nzErrorTip="Repita sua senha">
-                <nz-input-group nzPrefixIcon="lock">
-                    <input type="password" nz-input formControlName="userPasswordConfirm" placeholder="Confirmar a Senha">
-                </nz-input-group>
-            </nz-form-control>
-        </nz-form-item>
+
+        <div formGroupName="userPassword">
+            <nz-form-item>
+                <nz-form-control nzErrorTip="{{ mensagemErro.password }}">
+                    <nz-input-group nzPrefixIcon="lock">
+                        <input type="password" nz-input formControlName="password" placeholder="Senha">
+                    </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-control nzErrorTip="{{ mensagemErro.passwordRepeat }}">
+                    <nz-input-group nzPrefixIcon="lock">
+                        <input type="password" nz-input formControlName="repeat" placeholder="Confirmar a Senha">
+                    </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+        </div>
         <nz-form-item>
             <nz-form-control>
                 <button nz-button [nzType]="'primary'">Sign In</button>
             </nz-form-control>
         </nz-form-item>
         <h1>{{signinForm.status }}</h1>
+        <button (click)="showForm()">Show Form</button>
     </form>
