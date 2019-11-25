@@ -46,6 +46,7 @@ export class FormLoginComponent implements OnInit {
             case "OK":
               this.routerBuider.navigate(['board']);
               this.authService.setLoggedStatus(true);
+              this.authService.getUserLogged(user.email);
              this.resetLogin();          
               break;
             case "Email Inexistente":

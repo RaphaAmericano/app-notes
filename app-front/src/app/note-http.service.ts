@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { User } from './model/user';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -30,6 +30,10 @@ export class NoteHttpService {
 
   public checkEmail(user:User | string ) : Observable<any> {
     return this.http.post<User | string>(`/api/users/check/email`, user, httpOptions);
+  }
+
+  public getUserByEmail(email:string ) : Observable<any> {
+    return this.http.get<string>(`/api/users/email/${email}` );
   }
 
 }

@@ -10,11 +10,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
 import { NavbarComponent } from './navbar/navbar.component';
-import { NoteListComponent } from './note-list/note-list.component';
-import { NoteBoardComponent } from './note-board/note-board.component';
+import { NoteListComponent } from './note/note-list/note-list.component';
+import { NoteBoardComponent } from './note/note-board/note-board.component';
 import { LoginComponent } from './login/login.component';
 import { FormLoginComponent } from './login/form-login/form-login.component';
 import { FormSigninComponent } from './login/form-signin/form-signin.component';
+import { NoteComponent } from './note/note.component';
 
 registerLocaleData(en);
 
@@ -26,7 +27,8 @@ registerLocaleData(en);
     NoteBoardComponent,
     LoginComponent,
     FormLoginComponent,
-    FormSigninComponent
+    FormSigninComponent,
+    NoteComponent
   ],
   imports: [
     BrowserModule,
