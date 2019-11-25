@@ -3,6 +3,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { User } from 'src/app/model/user';
 import { NoteHttpService } from 'src/app/note-http.service';
 import { NotesValidatorsService } from 'src/app/notes-validators.service';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/auth.service';
 
 @Component({
   selector: 'app-form-login',
@@ -13,7 +15,11 @@ export class FormLoginComponent implements OnInit {
 
   public loginForm:FormGroup;
 
-  constructor(private formBuilder:FormBuilder, private service:NoteHttpService, private noteValidatores:NotesValidatorsService) { }
+  constructor(private formBuilder:FormBuilder, 
+              private service:NoteHttpService, 
+              private noteValidatores:NotesValidatorsService, 
+              private routerBuider:Router,
+              private authService:AuthService) { }
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
@@ -29,11 +35,18 @@ export class FormLoginComponent implements OnInit {
       user.senha = this.loginForm.value.userPassword;
       console.log(user);
       console.log(this.loginForm.valid);
-      if(!this.loginForm.valid ){ 
-        return; 
+      if(this.loginForm.valid ){ 
+        this.routerBuider.navigate(['board']);
+        this.authService.setLoggedStatus(true);
+        this.resetLogin();  
+        return;
       }
+      return; 
     }
-    
+
   }
 
+  private resetLogin(): void {
+    this.loginForm.reset();
+  }
 }
