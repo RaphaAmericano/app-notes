@@ -18,8 +18,14 @@ public class UserService {
     }
 
     public synchronized boolean addUser(User user){
-        userDAO.insertUser(user);
-        return true;
+
+        // varificar email
+        User userToCheck = userDAO.getByEmail(user.getEmail());
+        if(userToCheck == null || user.getEmail().equals(userToCheck.getEmail())){
+            return false;
+        }
+
+        return userDAO.insertUser(user);
     }
 
     public synchronized String checkUser( User user){
@@ -35,8 +41,25 @@ public class UserService {
             retorno = "Senha Inválida";
             return retorno;
         }
-        return "Ok";
+        return "OK";
     }
+
+    public synchronized Boolean checkEmail( String email ){
+        User emailCheck = userDAO.getByEmail(email);
+        if(emailCheck == null || email.trim().equals("")){
+            return false;
+        }
+        return true;
+    }
+
+    public synchronized User getUserByEmail(String email ){
+        User user = userDAO.getByEmail(email);
+        if(user == null){
+            return null;
+        }
+        return user;
+    }
+
 //    @Autowired
 //    private UserRepository userRepository;
 //

@@ -4,14 +4,14 @@ import com.notes.api.models.User;
 import com.notes.api.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Properties;
+
 
 @Controller
 @RequestMapping("users")
@@ -26,23 +26,39 @@ public class UserController {
         return new ResponseEntity<List<User>>(list, HttpStatus.OK);
     }
 
+    @GetMapping("email/{email}")
+    public ResponseEntity<User> getUserByEmail(@PathVariable("email") String email){
+        User user = userService.getUserByEmail(email);
+        return new ResponseEntity<User>(user, HttpStatus.OK);
+    }
+
     @PostMapping()
-    public ResponseEntity<Void> addUser(@RequestBody User user){
+    public ResponseEntity<Boolean> addUser(@RequestBody User user){
         boolean flag = userService.addUser(user);
         if(flag == false){
-            return new ResponseEntity<Void>(HttpStatus.CONFLICT);
+            return new ResponseEntity<Boolean>(HttpStatus.CONFLICT);
         }
-        return new ResponseEntity<Void>(HttpStatus.OK);
+        return new ResponseEntity<Boolean>(flag, HttpStatus.OK);
     }
 
-    @PostMapping("check")
-    public ResponseEntity<String> checkUser(@RequestBody User user){
+    @PostMapping(value = "check", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Properties> checkUser(@RequestBody User user){
         String userCheck = userService.checkUser(user);
+        Properties props = new Properties();
+        props.put("response", userCheck);
         if(userCheck == null){
-            return new ResponseEntity<String>("Erro",  HttpStatus.CONFLICT);
+            return new ResponseEntity<Properties>(props,  HttpStatus.CONFLICT);
         }
-        return new ResponseEntity<String>(userCheck, HttpStatus.OK);
+        return new ResponseEntity<Properties>(props  ,HttpStatus.OK);
     }
 
+    @PostMapping(value = "check/email", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Boolean> checkEmail(@RequestBody String email ){
+        Boolean emailCheck = userService.checkEmail(email);
+        if(emailCheck == null ){
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+        return new ResponseEntity<Boolean>(emailCheck, HttpStatus.OK);
+    }
 
 }

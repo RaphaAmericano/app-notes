@@ -56,10 +56,14 @@ public class UserDAO {
 //
 //    User listarPorId(int id);
 //
-    public void insertUser(User user){
-           String query = "INSERT INTO USERS(NOME, EMAIL, SENHA) VALUES(?, ?, ?)";
+    public boolean insertUser(User user){
+        String query = "INSERT INTO USERS(NOME, EMAIL, SENHA) VALUES(?, ?, ?)";
+        try {
             jdbcTemplate.update(query, user.getNome(), user.getEmail(), user.getSenha());
-
+            return true;
+        } catch (IncorrectResultSizeDataAccessException se ){
+            return false;
+        }
     }
 //
 //    User atualizar(User user);
