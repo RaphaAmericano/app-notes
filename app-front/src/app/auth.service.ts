@@ -16,13 +16,20 @@ export class AuthService {
 
   public setLoggedStatus(value: boolean ): void {
     this.loggedStatus = value;
-    this.menuEmitter.emit(this.loggedStatus);
+    this.emitStatus();
     this.clearUserLocalStorage(this.loggedStatus);
     localStorage.setItem('loggedin', this.loggedStatus.toString());
   }
 
   public getLoggedStatus(): boolean {
+    let status = JSON.parse(localStorage.getItem('loggedin'));
+    this.loggedStatus = status;
     return this.loggedStatus;
+  }
+
+  public emitStatus():void {
+    console.log(this.loggedStatus);
+    this.menuEmitter.emit(this.loggedStatus);
   }
 
   public getUserLogged(email: string ): void {

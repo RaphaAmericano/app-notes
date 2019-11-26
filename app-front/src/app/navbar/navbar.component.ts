@@ -20,7 +20,6 @@ export class NavbarComponent implements OnInit {
   public logoutUser():void {
     this.authService.setLoggedStatus(false);
     this.router.navigate([''])
-    console.log(localStorage);
   }
 
 }

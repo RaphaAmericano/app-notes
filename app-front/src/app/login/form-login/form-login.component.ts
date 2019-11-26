@@ -36,7 +36,6 @@ export class FormLoginComponent implements OnInit {
       user.email = this.loginForm.value.userEmail;
       user.senha = this.loginForm.value.userPassword;
 
-      console.log(this.loginForm.valid);
       if(!this.loginForm.valid ){ 
         return;
       }

@@ -20,7 +20,7 @@ export class NoteComponent implements OnInit {
 
   ngOnInit() {
     this.userLogged = this.authService.getUserActive();
-    
+    this.authService.emitStatus();
     this.noteHttp.getAllUserNotes(this.userLogged.id)
       .toPromise()
         .then(
