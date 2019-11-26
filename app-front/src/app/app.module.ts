@@ -16,6 +16,7 @@ import { LoginComponent } from './login/login.component';
 import { FormLoginComponent } from './login/form-login/form-login.component';
 import { FormSigninComponent } from './login/form-signin/form-signin.component';
 import { NoteComponent } from './note/note.component';
+import { TruncatePipe } from './pipes/truncate.pipe';
 
 registerLocaleData(en);
 
@@ -28,7 +29,8 @@ registerLocaleData(en);
     LoginComponent,
     FormLoginComponent,
     FormSigninComponent,
-    NoteComponent
+    NoteComponent,
+    TruncatePipe
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, AfterContentInit } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { User } from 'src/app/model/user';
 import { Note } from 'src/app/model/note';
 
@@ -7,19 +7,25 @@ import { Note } from 'src/app/model/note';
   templateUrl: './note-list.component.html',
   styleUrls: ['./note-list.component.scss']
 })
-export class NoteListComponent implements OnInit, AfterContentInit {
+export class NoteListComponent implements OnInit, OnChanges {
 
   @Input() user:User;
   @Input() listaNotas:Note[];
 
   constructor() { }
 
+  ngOnChanges(changes: SimpleChanges){
+    // console.log(changes.listaNotas);
+    // console.log(this.listaNotas);
+  }
+
   ngOnInit() {
     console.log(this.listaNotas);
   }
-
-  ngAfterContentInit(){
-    console.log(this.listaNotas);
-  }
  
+
+  public addNewNoteField(): void {
+    console.log("AddNewNote");
+  }
+
 }

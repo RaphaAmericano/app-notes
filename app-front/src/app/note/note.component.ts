@@ -13,7 +13,7 @@ import { map } from 'rxjs/operators';
 export class NoteComponent implements OnInit {
 
   public userLogged:User;
-  public listaNotas:Note[];
+  public listaNotas:Note[] = new Array<Note>();
   public activeNote:Note;
 
   constructor(private authService: AuthService, private noteHttp:NoteHttpService) { }
@@ -25,23 +25,19 @@ export class NoteComponent implements OnInit {
       .toPromise()
         .then(
           (res) => {
-            
             for(let index in res ){
-              
               let note = new Note();
               note.id = res[index].id;
               note.id_user = res[index].id_user;
               note.texto = res[index].texto;
               note.data_criacao = new Date( res[index].data_criacao);
               note.data_edicao = new Date(res[index].data_edicao);
-              console.log(note);
-              
+              this.listaNotas.push(note);
             }
           }, 
           (error) => {
             console.log(error);
           });
-    console.log(this.listaNotas);
   }
 
 

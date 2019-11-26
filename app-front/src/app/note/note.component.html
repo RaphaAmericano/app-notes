@@ -1,5 +1,4 @@
-<div class="inner-content">
-    <app-note-list [user]="userLogged" [listaNotas]="listaNotas"></app-note-list>
-    <app-note-board [user]="userLogged"></app-note-board>
+<div class="inner-content" nz-row nzType="flex" nzJustify="center">
+    <app-note-list nz-col nzSpan="12" [user]="userLogged" [listaNotas]="listaNotas"></app-note-list>
+    <app-note-board nz-col nzSpan="12" [user]="userLogged"></app-note-board>
 </div>
-
