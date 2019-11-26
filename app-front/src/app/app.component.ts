@@ -12,11 +12,9 @@ export class AppComponent implements OnInit{
   constructor(private router:Router, private authService:AuthService){}
 
   ngOnInit(){
-    
     if(this.authService.getLoggedStatus()){
       this.router.navigate(['board']);
     }
-    
   }
 
 }

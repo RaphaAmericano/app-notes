@@ -28,7 +28,6 @@ export class AuthService {
   }
 
   public emitStatus():void {
-    console.log(this.loggedStatus);
     this.menuEmitter.emit(this.loggedStatus);
   }
 
