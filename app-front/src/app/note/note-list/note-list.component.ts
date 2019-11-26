@@ -24,7 +24,6 @@ export class NoteListComponent implements OnInit, OnChanges {
   }
   
   public selectNote(value:number): void{
-    console.log(value);
     this.noteSelectEmmiter.emit(value);
   }
 

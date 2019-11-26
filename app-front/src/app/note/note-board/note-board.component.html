@@ -1,1 +1,23 @@
-<div>Note Board</div>
+<nz-page-header nzTitle="{{ user.nome }}" nzSubtitle="{{ user.email }}"> 
+        <nz-page-header-extra *ngIf="activeNote">
+            <button 
+            nz-button 
+            nzType="default" 
+            nzShape="circle"
+            nz-popover
+            nzPopoverTitle="Últma Edição"
+            nzPopoverContent="{{activeNote.data_edicao}}">
+                <i nz-icon nzType="clock-circle"></i>
+            </button>
+            <button nz-button nzType="danger" nzShape="circle"><i nz-icon nzType="delete"></i></button>
+            <button nz-button nzType="default" nzShape="circle"><i nz-icon nzType="dash"></i></button>
+            <button nz-button nzType="primary" nzShape="circle"><i nz-icon nzType="info-circle"></i></button>
+        </nz-page-header-extra>
+</nz-page-header>
+<form nz-form>
+    <nz-form-item>
+        <nz-form-control [nzSpan]="14">
+        <textarea nz-input type="text"></textarea>
+        </nz-form-control>
+    </nz-form-item >
+</form>
