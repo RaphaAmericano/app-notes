@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges, EventEmitter, Output } from '@angular/core';
 import { User } from 'src/app/model/user';
 import { Note } from 'src/app/model/note';
 
@@ -9,9 +9,9 @@ import { Note } from 'src/app/model/note';
 })
 export class NoteListComponent implements OnInit, OnChanges {
 
-  @Input() user:User;
-  @Input() listaNotas:Note[];
-
+  @Input() public user:User;
+  @Input() public listaNotas:Note[];
+  @Output() public noteSelectEmmiter:EventEmitter<number> = new EventEmitter<number>();
   constructor() { }
 
   ngOnChanges(changes: SimpleChanges){
@@ -22,7 +22,11 @@ export class NoteListComponent implements OnInit, OnChanges {
   ngOnInit() {
     console.log(this.listaNotas);
   }
- 
+  
+  public selectNote(value:number): void{
+    console.log(value);
+    this.noteSelectEmmiter.emit(value);
+  }
 
   public addNewNoteField(): void {
     console.log("AddNewNote");

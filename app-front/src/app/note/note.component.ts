@@ -3,7 +3,6 @@ import { AuthService } from '../auth.service';
 import { User } from '../model/user';
 import { Note } from '../model/note';
 import { NoteHttpService } from '../note-http.service';
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-note',
@@ -38,8 +37,14 @@ export class NoteComponent implements OnInit {
           (error) => {
             console.log(error);
           });
+    //
+  }
+
+  public changeActiveNote(value:number){
+    this.activeNote = this.listaNotas[value];
   }
 
 
+  //todo: ng onchange para injetar no campo da lsita
 
 }

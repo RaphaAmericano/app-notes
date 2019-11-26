@@ -16,12 +16,14 @@
     <!-- button -->
     
     <nz-list [nzItemLayout]="'horizontal'" [nzLoading]="loading">
-        <nz-list-item *ngFor="let note of listaNotas"> 
-            <nz-list-item-meta
-                [nzTitle]="note.texto | truncate:[85, '...']"
-                nzDescription="{{note.texto}}"
-            >
-            </nz-list-item-meta>
+        <nz-list-item *ngFor="let note of listaNotas; let i = index"> 
+            <a (click)="selectNote(i)">
+                <nz-list-item-meta
+                    [nzTitle]="note.texto | truncate:[85, '...']"
+                    nzDescription="{{note.texto}}"
+                >
+                </nz-list-item-meta>
+            </a>            
         </nz-list-item>
     </nz-list>
 </div>
