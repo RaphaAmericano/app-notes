@@ -48,6 +48,11 @@ export class AuthService {
   }
 
   public getUserActive():User {
+    let user:User = new User();
+    user.id = +localStorage.getItem("id");
+    user.nome = localStorage.getItem("nome");
+    user.email = localStorage.getItem("email");
+    this.userActive = user;
     return this.userActive;
   }
 

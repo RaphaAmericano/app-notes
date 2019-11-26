@@ -36,4 +36,8 @@ export class NoteHttpService {
     return this.http.get<string>(`/api/users/email/${email}` );
   }
 
+  public getAllUserNotes(id:number) : Observable<any> {
+    return this.http.get<number>(`/api/notes/user/${id}`);
+  }
+
 }
