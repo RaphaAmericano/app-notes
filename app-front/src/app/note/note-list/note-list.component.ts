@@ -20,7 +20,7 @@ export class NoteListComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    console.log(this.listaNotas);
+    
   }
   
   public selectNote(value:number): void{

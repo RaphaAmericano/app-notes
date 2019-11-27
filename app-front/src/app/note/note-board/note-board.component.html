@@ -5,8 +5,8 @@
             nzType="default" 
             nzShape="circle"
             nz-popover
-            nzPopoverTitle="Últma Edição"
-            nzPopoverContent="{{activeNote.data_edicao}}">
+            nzPopoverTitle="Última Edição"
+            nzPopoverContent="{{activeNote.data_edicao | date : 'short' }}">
                 <i nz-icon nzType="clock-circle"></i>
             </button>
             <button nz-button nzType="danger" nzShape="circle"><i nz-icon nzType="delete"></i></button>
@@ -14,10 +14,10 @@
             <button nz-button nzType="primary" nzShape="circle"><i nz-icon nzType="info-circle"></i></button>
         </nz-page-header-extra>
 </nz-page-header>
-<form nz-form>
+<form nz-form [formGroup]="formTextContent" >
     <nz-form-item>
         <nz-form-control [nzSpan]="14">
-        <textarea nz-input type="text"></textarea>
+        <textarea nz-input formControlName="texto" (keyup)="saveNote()"></textarea>
         </nz-form-control>
     </nz-form-item >
 </form>

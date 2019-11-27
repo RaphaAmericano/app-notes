@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { User } from 'src/app/model/user';
 import { Note } from 'src/app/model/note';
+import { NoteHttpService } from 'src/app/note-http.service';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-note-board',
@@ -11,15 +13,29 @@ export class NoteBoardComponent implements OnInit, OnChanges {
 
   @Input() public user:User;
   @Input() public activeNote:Note;
-  constructor() { }
+
+  public formTextContent:FormGroup;
+
+  constructor(
+    private noteHttp:NoteHttpService, 
+    private formBuilder:FormBuilder) { }
 
   ngOnInit() {
-    console.log(this.activeNote);
+    this.formTextContent = this.formBuilder.group({
+      texto:[null, [Validators.required, Validators.minLength(10)]]   
+    });
   }
 
   ngOnChanges(){
-    console.log(this.activeNote);
+    if(this.activeNote !== undefined ){
+      
+      this.formTextContent.setValue({ texto: this.activeNote.texto });
+    }
   }
   //ngonchange para carregar a nota selecionada
+
+  public saveNote(): void{
+    console.log(this.formTextContent.get("texto").value);
+  }
 
 }
