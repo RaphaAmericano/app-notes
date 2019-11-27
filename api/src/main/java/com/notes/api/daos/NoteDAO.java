@@ -3,6 +3,7 @@ package com.notes.api.daos;
 import com.notes.api.mappers.NoteMapper;
 import com.notes.api.models.Note;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -44,9 +45,24 @@ public class NoteDAO {
         jdbcTemplate.update(query, note.getId_user(), note.getTexto());
     }
 
-    public void updateNote(Note note){
+    public boolean updateNote(Note note){
         String query = "UPDATE NOTES SET NOTA = ? WHERE ID = ?";
-        jdbcTemplate.update(query, note.getTexto(), note.getId());
+        try{
+            jdbcTemplate.update(query, note.getTexto(), note.getId());
+            return true;
+        }
+        catch (IncorrectResultSizeDataAccessException se){
+            return false;
+        }
     }
 
+    public boolean deleteNote(int id){
+        String query = "DELETE FROM NOTES WHERE ID = ?";
+        try {
+            jdbcTemplate.update(query, id);
+            return true;
+        } catch(IncorrectResultSizeDataAccessException se){
+            return false;
+        }
+    }
 }

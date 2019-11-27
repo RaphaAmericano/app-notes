@@ -25,7 +25,10 @@ public class NoteService {
     }
 
     public synchronized boolean updateNote(Note note ){
-        noteDAO.updateNote(note);
-        return true;
+        return noteDAO.updateNote(note);
+    }
+
+    public synchronized boolean deleteNote(int id){
+        return noteDAO.deleteNote(id);
     }
 }

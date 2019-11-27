@@ -44,12 +44,23 @@ public class NoteController {
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
-    @PutMapping()
-    public ResponseEntity<Void> updateNote(@RequestBody Note note){
-        boolean flag = noteService.updateNote(note);
-        if(flag == false){
-            return new ResponseEntity<Void>(HttpStatus.CONFLICT);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Boolean> deleteNote(@PathVariable("id") int id){
+        boolean flag = noteService.deleteNote(id);
+        if(flag == false ){
+            return new ResponseEntity<Boolean>(HttpStatus.CONFLICT);
         }
-        return new ResponseEntity<Void>(HttpStatus.OK);
+        return new ResponseEntity<Boolean>(flag, HttpStatus.OK);
+    }
+
+    @PutMapping()
+    public ResponseEntity<Boolean> updateNote(@RequestBody Note note){
+
+        boolean flag = noteService.updateNote(note);
+        System.out.println(flag);
+        if(flag == false){
+            return new ResponseEntity<Boolean>(HttpStatus.CONFLICT);
+        }
+        return new ResponseEntity<Boolean>(flag, HttpStatus.OK);
     }
 }
