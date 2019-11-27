@@ -41,8 +41,12 @@ export class NoteHttpService {
     return this.http.get<Note[]>(`/api/notes/user/${id}`);
   }
 
+  public postNewNote(note:Note) : Observable<boolean> {
+    return this.http.post<boolean>(`/api/notes`, note, httpOptions);
+  }
+
   public updateUserNote(note:Note): Observable<void> {
-    return this.http.put<void>(`/api/notes`, note, httpOptions);
+    return this.http.patch<void>(`/api/notes/${note.id}`, note, httpOptions);
   }
 
   public deleteUserNote(note:Note): Observable<boolean> {

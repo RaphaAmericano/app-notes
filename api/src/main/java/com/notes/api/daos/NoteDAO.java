@@ -40,15 +40,21 @@ public class NoteDAO {
         return jdbcTemplate.query(query, rowMapper, id);
     }
 
-    public void addNote(Note note){
+    public boolean addNote(Note note){
         String query = "INSERT INTO NOTES (ID_USUARIO, NOTA) VALUES (?, ?)";
-        jdbcTemplate.update(query, note.getId_user(), note.getTexto());
+        try {
+            jdbcTemplate.update(query, note.getId_user(), note.getTexto());
+            return true;
+        } catch(IncorrectResultSizeDataAccessException se){
+            return false;
+        }
+
     }
 
-    public boolean updateNote(Note note){
+    public boolean updateNote(int id, Note note){
         String query = "UPDATE NOTES SET NOTA = ? WHERE ID = ?";
         try{
-            jdbcTemplate.update(query, note.getTexto(), note.getId());
+            jdbcTemplate.update(query, note.getTexto(), id);
             return true;
         }
         catch (IncorrectResultSizeDataAccessException se){

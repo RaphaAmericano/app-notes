@@ -1,4 +1,16 @@
 <div class="inner-content" nz-row nzType="flex" nzJustify="center">
-    <app-note-list nz-col nzSpan="12" [user]="userLogged" [listaNotas]="listaNotas" (noteSelectEmmiter)="changeActiveNote($event)"></app-note-list>
-    <app-note-board nz-col nzSpan="12" [user]="userLogged" [activeNote]="activeNote" (updateListEmmiter)="uploadListNote()"></app-note-board>
+    <app-note-list 
+    nz-col 
+    nzSpan="12" 
+    [user]="userLogged" 
+    [listaNotas]="listaNotas" 
+    (noteSelectEmmiter)="changeActiveNote($event)"
+    (newNoteEmmiter)="newNote()"></app-note-list>
+    <app-note-board 
+    nz-col 
+    nzSpan="12" 
+    [user]="userLogged" 
+    [activeNote]="activeNote" 
+    (updateListEmmiter)="uploadListNote()"
+    (noteCreatedEmmiter)="changeActiveNote(0)"></app-note-board>
 </div>

@@ -27,8 +27,11 @@ export class NoteComponent implements OnInit {
     this.activeNote = this.listaNotas[value];
   }
 
+  public newNote(){
+    this.activeNote = null; 
+  }
+
   public uploadListNote(): void {
-    console.log("Update");
     this.noteHttp.getAllUserNotes(this.userLogged.id).toPromise()
       .then(
         (res) => {

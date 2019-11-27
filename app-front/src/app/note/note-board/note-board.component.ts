@@ -17,6 +17,7 @@ export class NoteBoardComponent implements OnInit, OnChanges {
   @Input() public user:User;
   @Input() public activeNote:Note;
   @Output() public updateListEmmiter:EventEmitter<void> = new EventEmitter<void>();
+  @Output() public noteCreatedEmmiter:EventEmitter<void> = new EventEmitter<void>();
   public formTextContent:FormGroup;
 
   constructor(
@@ -30,18 +31,43 @@ export class NoteBoardComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(){
-    if(this.activeNote !== undefined ){
-      this.formTextContent.setValue({ texto: this.activeNote.texto });
+    if(this.formTextContent){
+      if(this.activeNote !== undefined && this.activeNote !== null ){
+        this.formTextContent.setValue({ texto: this.activeNote.texto });
+      } else if(this.activeNote == null){
+        this.formTextContent.reset();
+      }
+    }
+    if(this.activeNote == null && this.formTextContent){
+      this.formTextContent.reset();
     }
   }
 
-  public saveNote(): void {
-    setTimeout(() => {
-      this.updateListEmmiter.emit();
-      this.noteHttp.updateUserNote(this.activeNote).subscribe(
-        res => console.log(res)
+  public addNewNote(): void {
+    const newNote = new Note();
+    newNote.texto = this.formTextContent.get("texto").value;
+    newNote.id_user = parseInt(localStorage.getItem("id")); 
+    this.noteHttp.postNewNote(newNote).toPromise()
+      .then(
+        (res) => { 
+          this.updateListEmmiter.emit(); 
+        },
+        (error) => { console.log(error),
+        setTimeout(() => { this.noteCreatedEmmiter.emit() }, 500 )  
+      }
       );
-    }, 5000);
+  }
+
+  public saveNote(): void {
+
+    //todo: auto save ao retirar o teclado
+
+    // setTimeout(() => {
+    //   this.updateListEmmiter.emit();
+    //   this.noteHttp.updateUserNote(this.activeNote).subscribe(
+    //     res => console.log(res)
+    //   );
+    // }, 5000);
     
   }
 

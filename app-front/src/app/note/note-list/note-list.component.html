@@ -9,14 +9,14 @@
         </nz-form-item>
         <nz-form-item>
             <nz-form-control>
-                <button nz-button nzType="default" nzShape="circle" (click)="addNewNoteField()" ><i nz-icon nzType="plus"></i></button>
+                <button nz-button nzType="default" nzShape="circle" (click)="addNewNoteField()"><i nz-icon nzType="plus"></i></button>
             </nz-form-control>
         </nz-form-item>
     </form>
     <!-- button -->
     
     <nz-list [nzItemLayout]="'horizontal'" [nzLoading]="loading">
-        <nz-list-item *ngFor="let note of listaNotas; let i = index"> 
+        <nz-list-item *ngFor="let note of listaNotas | reverse; let i = index"> 
             <a (click)="selectNote(i)">
                 <nz-list-item-meta
                     [nzTitle]="note.texto | truncate:[85, '...']"

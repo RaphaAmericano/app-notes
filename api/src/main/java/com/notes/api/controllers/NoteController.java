@@ -36,12 +36,12 @@ public class NoteController {
     }
 
     @PostMapping()
-    public ResponseEntity<Void> addUNote(@RequestBody Note note ){
+    public ResponseEntity<Boolean> addUNote(@RequestBody Note note ){
         boolean flag = noteService.addNote(note);
         if(flag == false ){
-            return new ResponseEntity<Void>(HttpStatus.CONFLICT);
+            return new ResponseEntity<Boolean>(HttpStatus.CONFLICT);
         }
-        return new ResponseEntity<Void>(HttpStatus.OK);
+        return new ResponseEntity<Boolean>(flag, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
@@ -53,10 +53,10 @@ public class NoteController {
         return new ResponseEntity<Boolean>(flag, HttpStatus.OK);
     }
 
-    @PutMapping()
-    public ResponseEntity<Boolean> updateNote(@RequestBody Note note){
+    @PatchMapping("/{id}")
+    public ResponseEntity<Boolean> updateNote(@PathVariable("id") int id, @RequestBody Note note){
 
-        boolean flag = noteService.updateNote(note);
+        boolean flag = noteService.updateNote(id, note);
         System.out.println(flag);
         if(flag == false){
             return new ResponseEntity<Boolean>(HttpStatus.CONFLICT);

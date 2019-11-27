@@ -12,7 +12,7 @@ export class NoteListComponent implements OnInit, OnChanges {
   @Input() public user:User;
   @Input() public listaNotas:Note[];
   @Output() public noteSelectEmmiter:EventEmitter<number> = new EventEmitter<number>();
-  
+  @Output() public newNoteEmmiter:EventEmitter<void> = new EventEmitter<void>();
   constructor() { }
 
   ngOnChanges(changes: SimpleChanges){
@@ -29,7 +29,7 @@ export class NoteListComponent implements OnInit, OnChanges {
   }
 
   public addNewNoteField(): void {
-    console.log("AddNewNote");
+    this.newNoteEmmiter.emit();
   }
 
 }

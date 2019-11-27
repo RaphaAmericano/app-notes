@@ -27,10 +27,13 @@
             <button nz-button nzType="primary" nzShape="circle"><i nz-icon nzType="info-circle"></i></button>
         </nz-page-header-extra>
 </nz-page-header>
-<form nz-form [formGroup]="formTextContent" >
+<form nz-form [formGroup]="formTextContent">
     <nz-form-item>
         <nz-form-control [nzSpan]="14">
         <textarea nz-input formControlName="texto" (keyup)="saveNote()"></textarea>
         </nz-form-control>
     </nz-form-item >
+    <nz-form-item>
+        <button nz-button [disabled]="activeNote" (click)="addNewNote()">Nova nota</button>
+    </nz-form-item>
 </form>
