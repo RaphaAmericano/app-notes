@@ -9,7 +9,20 @@
             nzPopoverContent="{{activeNote.data_edicao | date : 'short' }}">
                 <i nz-icon nzType="clock-circle"></i>
             </button>
-            <button nz-button nzType="danger" nzShape="circle"><i nz-icon nzType="delete"></i></button>
+            <button 
+            nz-button 
+            nzType="danger" 
+            nz-popover
+            nzPopoverTitle="Confirma ?"
+            [(nzVisible)]="popOverDeleteVisibility"
+            [nzPopoverContent]="deleteButtonTemplate"
+            nzPopoverTrigger="click"
+            nzShape="circle">
+                <i nz-icon nzType="delete"></i>
+            </button>
+            <ng-template #deleteButtonTemplate>
+                <a (click)="deleteNote()">Deletar</a>
+            </ng-template>
             <button nz-button nzType="default" nzShape="circle"><i nz-icon nzType="dash"></i></button>
             <button nz-button nzType="primary" nzShape="circle"><i nz-icon nzType="info-circle"></i></button>
         </nz-page-header-extra>

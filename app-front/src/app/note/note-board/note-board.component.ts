@@ -1,8 +1,9 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, EventEmitter, Output } from '@angular/core';
 import { User } from 'src/app/model/user';
 import { Note } from 'src/app/model/note';
 import { NoteHttpService } from 'src/app/note-http.service';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { distinctUntilChanged, debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-note-board',
@@ -11,9 +12,11 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 })
 export class NoteBoardComponent implements OnInit, OnChanges {
 
+  public popOverDeleteVisibility:boolean;
+
   @Input() public user:User;
   @Input() public activeNote:Note;
-
+  @Output() public updateListEmmiter:EventEmitter<void> = new EventEmitter<void>();
   public formTextContent:FormGroup;
 
   constructor(
@@ -28,14 +31,30 @@ export class NoteBoardComponent implements OnInit, OnChanges {
 
   ngOnChanges(){
     if(this.activeNote !== undefined ){
-      
       this.formTextContent.setValue({ texto: this.activeNote.texto });
     }
   }
-  //ngonchange para carregar a nota selecionada
 
-  public saveNote(): void{
-    console.log(this.formTextContent.get("texto").value);
+  public saveNote(): void {
+    setTimeout(() => {
+      this.updateListEmmiter.emit();
+      this.noteHttp.updateUserNote(this.activeNote).subscribe(
+        res => console.log(res)
+      );
+    }, 5000);
+    
+  }
+
+  public deleteNote(): void{
+    this.popOverDeleteVisibility = false;
+    this.noteHttp.deleteUserNote(this.activeNote).toPromise().then(
+      (res) => {
+        console.log(res)
+        this.updateListEmmiter.emit();
+        this.formTextContent.reset();
+        this.activeNote = null;
+      }
+    );
   }
 
 }

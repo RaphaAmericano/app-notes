@@ -12,6 +12,7 @@ export class NoteListComponent implements OnInit, OnChanges {
   @Input() public user:User;
   @Input() public listaNotas:Note[];
   @Output() public noteSelectEmmiter:EventEmitter<number> = new EventEmitter<number>();
+  
   constructor() { }
 
   ngOnChanges(changes: SimpleChanges){

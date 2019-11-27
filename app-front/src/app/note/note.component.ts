@@ -20,31 +20,26 @@ export class NoteComponent implements OnInit {
   ngOnInit() {
     this.userLogged = this.authService.getUserActive();
     this.authService.emitStatus();
-    this.noteHttp.getAllUserNotes(this.userLogged.id)
-      .toPromise()
-        .then(
-          (res) => {
-            for(let index in res ){
-              let note = new Note();
-              note.id = res[index].id;
-              note.id_user = res[index].id_user;
-              note.texto = res[index].texto;
-              note.data_criacao = new Date( res[index].data_criacao);
-              note.data_edicao = new Date(res[index].data_edicao);
-              this.listaNotas.push(note);
-            }
-          }, 
-          (error) => {
-            console.log(error);
-          });
-    //
+    this.uploadListNote();
   }
 
   public changeActiveNote(value:number){
     this.activeNote = this.listaNotas[value];
   }
 
+  public uploadListNote(): void {
+    console.log("Update");
+    this.noteHttp.getAllUserNotes(this.userLogged.id).toPromise()
+      .then(
+        (res) => {
+          this.listaNotas = res;
+        }, 
+        (error) => {
+          console.log(error);
+        }
+      );
+  }
 
-  //todo: ng onchange para injetar no campo da lsita
+  
 
 }

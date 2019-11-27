@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { User } from './model/user';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { Note } from './model/note';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -36,8 +37,16 @@ export class NoteHttpService {
     return this.http.get<string>(`/api/users/email/${email}` );
   }
 
-  public getAllUserNotes(id:number) : Observable<any> {
-    return this.http.get<number>(`/api/notes/user/${id}`);
+  public getAllUserNotes(id:number) : Observable<Note[]> {
+    return this.http.get<Note[]>(`/api/notes/user/${id}`);
+  }
+
+  public updateUserNote(note:Note): Observable<void> {
+    return this.http.put<void>(`/api/notes`, note, httpOptions);
+  }
+
+  public deleteUserNote(note:Note): Observable<boolean> {
+    return this.http.delete<boolean>(`/api/notes/${note.id}`, httpOptions );
   }
 
 }
