@@ -53,7 +53,7 @@ export class FormSigninComponent implements OnInit {
   }
 
   public showForm(): void {
-    console.log(this.signinForm.get('userPassword'));
+    console.log(this.signinForm.get("userEmail").hasError("checkEmail"));
   }
 
 }

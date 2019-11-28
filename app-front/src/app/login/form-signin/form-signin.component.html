@@ -4,18 +4,21 @@
                 <nz-input-group nzPrefixIcon="user">
                     <input type="text" nz-input formControlName="userName" placeholder="Nome">
                     <ng-template #errorSigninNome let-control>
-                        <ng-container *ngIf="control.hasError('required')"> 
-                            Nome Obrigatorio
-                        </ng-container>
+                        <nz-alert nzType="warning" *ngIf="control.hasError('required')" nzMessage="{{ mensagemErro.nome }}"></nz-alert>
                     </ng-template>
                 </nz-input-group>
             </nz-form-control>
         </nz-form-item>
         <nz-form-item>
-            <nz-form-control nzErrorTip="{{ mensagemErro.email }}">
+            <nz-form-control [nzErrorTip]="errorEmail">
                 <nz-input-group nzPrefixIcon="mail">
                     <input type="email" nz-input formControlName="userEmail" placeholder="Email">
                 </nz-input-group>
+                <ng-template #errorEmail let-control>
+                    <nz-alert *ngIf="control.hasError('required')" nzType="warning" nzMessage="{{ mensagemErro.email }}"></nz-alert>
+                    <nz-alert *ngIf="control.hasError('email')" nzType="warning" nzMessage="Email Inválido"></nz-alert>
+                    <nz-alert *ngIf="signinForm.get('userEmail').hasError('checkEmail')" nzType="error" nzMessage="Email já utilizado"></nz-alert>
+                </ng-template>
             </nz-form-control>
         </nz-form-item>
 
@@ -35,7 +38,6 @@
                 <nz-form-control [nzErrorTip]="errorPasswordMatch">
                     <nz-input-group nzPrefixIcon="lock">
                         <input type="password" nz-input formControlName="repeat" placeholder="Confirmar a Senha">
-                        {{ signinForm.get('userPassword').hasError('passwordMismatch') }}
                         <ng-template #errorPasswordMatch let-control>
                             <nz-alert *ngIf="control.hasError('required')" zType="warning" nzMessage="Preencha a senha"></nz-alert>
                         </ng-template>
@@ -49,7 +51,5 @@
                 <button nz-button [nzType]="'primary'">Sign In</button>
             </nz-form-control>
         </nz-form-item>
-        <h1>{{signinForm.valid }}</h1>
-
         <button nz-button (click)="showForm()">MOstrar</button>
     </form>
