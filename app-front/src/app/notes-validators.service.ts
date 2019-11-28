@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AbstractControl, AsyncValidatorFn, FormGroup } from '@angular/forms';
+import { AbstractControl, AsyncValidatorFn, FormGroup, ValidatorFn } from '@angular/forms';
 import { NoteHttpService } from './note-http.service';
 import { Observable, of } from 'rxjs';
 import { map, distinctUntilChanged, debounceTime, take, switchMap } from 'rxjs/operators';
@@ -28,22 +28,22 @@ export class NotesValidatorsService {
     }
   }
 
-  public checkMatchPassword():AsyncValidatorFn {
+  public checkMatchPassword(passowrdKey:string, repeatKey:string ):ValidatorFn {
     
-    return (group:FormGroup): Observable<{[key:string]: any} | null> =>{
+    return (control: AbstractControl): { [key: string]: boolean } | null => {
+      if(!control){ return null;}
+      const password = control.get(passowrdKey);
+      const confirmRepeat = control.get(repeatKey);
+      if(!password.value || !confirmRepeat.value){
       
-      return group.valueChanges.pipe(
-        debounceTime(500),
-        distinctUntilChanged(),
-        take(1),
-        map( (res) => {
-              if(group.get('password').value === group.get('repeat').value) {
-                return null;
-              } 
-              return  { passwordMatch: false };
-          }
-        )
-      )//pipe
-    }
+        return null;
+      }
+      if(password.value !== confirmRepeat.value){
+        console.log(control);
+        return { passwordMismatch: true };
+      }
+      console.log(control);
+      return null;
+    };
   }
 }

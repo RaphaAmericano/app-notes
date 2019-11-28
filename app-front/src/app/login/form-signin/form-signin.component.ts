@@ -29,7 +29,8 @@ export class FormSigninComponent implements OnInit {
       userPassword: this.formBuilder.group({
         password:[null, Validators.required],
         repeat:[null, Validators.required]
-      }, {validator: this.noteValidators.checkMatchPassword()})
+      }, {validator: this.noteValidators.checkMatchPassword('password', 'repeat')}
+      )
     })
   }
 
@@ -49,6 +50,10 @@ export class FormSigninComponent implements OnInit {
   }
   public resetForm(): void {
     this.signinForm.reset();
+  }
+
+  public showForm(): void {
+    console.log(this.signinForm.get('userPassword'));
   }
 
 }

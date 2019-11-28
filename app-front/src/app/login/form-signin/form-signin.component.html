@@ -1,8 +1,13 @@
 <form nz-form [formGroup]="signinForm" (ngSubmit)="submitSignIn()">
         <nz-form-item>
-            <nz-form-control nzErrorTip="{{mensagemErro.nome}}">
+            <nz-form-control [nzErrorTip]="errorSigninNome">
                 <nz-input-group nzPrefixIcon="user">
                     <input type="text" nz-input formControlName="userName" placeholder="Nome">
+                    <ng-template #errorSigninNome let-control>
+                        <ng-container *ngIf="control.hasError('required')"> 
+                            Nome Obrigatorio
+                        </ng-container>
+                    </ng-template>
                 </nz-input-group>
             </nz-form-control>
         </nz-form-item>
@@ -16,16 +21,25 @@
 
         <div formGroupName="userPassword">
             <nz-form-item>
-                <nz-form-control nzErrorTip="{{ mensagemErro.password }}">
+                <nz-form-control [nzErrorTip]="errorPassword">
                     <nz-input-group nzPrefixIcon="lock">
                         <input type="password" nz-input formControlName="password" placeholder="Senha">
+                        <ng-template #errorPassword let-control>
+                            <nz-alert *ngIf="control.hasError('required')" nzType="error" nzMessage="Preencha a senha"></nz-alert>
+                        </ng-template>
+
                     </nz-input-group>
                 </nz-form-control>
             </nz-form-item>
             <nz-form-item>
-                <nz-form-control nzErrorTip="{{ mensagemErro.passwordRepeat }}">
+                <nz-form-control [nzErrorTip]="errorPasswordMatch">
                     <nz-input-group nzPrefixIcon="lock">
                         <input type="password" nz-input formControlName="repeat" placeholder="Confirmar a Senha">
+                        {{ signinForm.get('userPassword').hasError('passwordMismatch') }}
+                        <ng-template #errorPasswordMatch let-control>
+                            <nz-alert *ngIf="control.hasError('required')" zType="warning" nzMessage="Preencha a senha"></nz-alert>
+                        </ng-template>
+                        <nz-alert *ngIf="signinForm.get('userPassword').hasError('passwordMismatch')" nzType="error" nzMessage="Senha não correspondente"></nz-alert>
                     </nz-input-group>
                 </nz-form-control>
             </nz-form-item>
@@ -35,5 +49,7 @@
                 <button nz-button [nzType]="'primary'">Sign In</button>
             </nz-form-control>
         </nz-form-item>
-        <h1>{{signinForm.status }}</h1>
+        <h1>{{signinForm.valid }}</h1>
+
+        <button nz-button (click)="showForm()">MOstrar</button>
     </form>
