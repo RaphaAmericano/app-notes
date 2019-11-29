@@ -1,6 +1,6 @@
 <form nz-form [formGroup]="signinForm" (ngSubmit)="submitSignIn()">
         <nz-form-item>
-            <nz-form-control [nzErrorTip]="errorSigninNome">
+            <nz-form-control [nzErrorTip]="errorSigninNome" nzHasFeedback>
                 <nz-input-group nzPrefixIcon="user">
                     <input type="text" nz-input formControlName="userName" placeholder="Nome">
                     <ng-template #errorSigninNome let-control>
@@ -10,46 +10,48 @@
             </nz-form-control>
         </nz-form-item>
         <nz-form-item>
-            <nz-form-control [nzErrorTip]="errorEmail">
+            <nz-form-control [nzErrorTip]="errorEmail" [nzWarningTip]="warningEmail">
                 <nz-input-group nzPrefixIcon="mail">
                     <input type="email" nz-input formControlName="userEmail" placeholder="Email">
                 </nz-input-group>
                 <ng-template #errorEmail let-control>
+                    <nz-alert *ngIf="signinForm.get('userEmail').hasError('checkEmail')" nzType="error" nzMessage="Email já utilizado"></nz-alert>
+                </ng-template>
+                <ng-template #warningEmail let-control>
                     <nz-alert *ngIf="control.hasError('required')" nzType="warning" nzMessage="{{ mensagemErro.email }}"></nz-alert>
                     <nz-alert *ngIf="control.hasError('email')" nzType="warning" nzMessage="Email Inválido"></nz-alert>
-                    <nz-alert *ngIf="signinForm.get('userEmail').hasError('checkEmail')" nzType="error" nzMessage="Email já utilizado"></nz-alert>
                 </ng-template>
             </nz-form-control>
         </nz-form-item>
 
         <div formGroupName="userPassword">
             <nz-form-item>
-                <nz-form-control [nzErrorTip]="errorPassword">
+                <nz-form-control nzHasFeedback [nzErrorTip]="errorPassword">
                     <nz-input-group nzPrefixIcon="lock">
                         <input type="password" nz-input formControlName="password" placeholder="Senha">
                         <ng-template #errorPassword let-control>
                             <nz-alert *ngIf="control.hasError('required')" nzType="error" nzMessage="Preencha a senha"></nz-alert>
                         </ng-template>
-
                     </nz-input-group>
                 </nz-form-control>
             </nz-form-item>
             <nz-form-item>
-                <nz-form-control [nzErrorTip]="errorPasswordMatch">
+                <nz-form-control [nzWarningTip]="passwordRepeatRequire">
                     <nz-input-group nzPrefixIcon="lock">
                         <input type="password" nz-input formControlName="repeat" placeholder="Confirmar a Senha">
-                        <ng-template #errorPasswordMatch let-control>
-                            <nz-alert *ngIf="control.hasError('required')" zType="warning" nzMessage="Preencha a senha"></nz-alert>
+                        <ng-template #passwordRepeatRequire let-control>
+                            <nz-alert *ngIf="control.hasError('required')" zType="error" nzMessage="Preencha a senha"></nz-alert>
                         </ng-template>
-                        <nz-alert *ngIf="signinForm.get('userPassword').hasError('passwordMismatch')" nzType="error" nzMessage="Senha não correspondente"></nz-alert>
+                        <ng-template [ngIf]="signinForm.get('userPassword').hasError('passwordMismatch')">
+                            <nz-alert nzType="error" nzMessage="Senha não correspondente"></nz-alert>
+                        </ng-template>
                     </nz-input-group>
                 </nz-form-control>
             </nz-form-item>
         </div>
         <nz-form-item>
             <nz-form-control>
-                <button nz-button [nzType]="'primary'">Sign In</button>
+                <button [disabled]="!signinForm.valid" nz-button [nzType]="'primary'">Sign In</button>
             </nz-form-control>
         </nz-form-item>
-        <button nz-button (click)="showForm()">MOstrar</button>
     </form>

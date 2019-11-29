@@ -35,14 +35,12 @@ export class NotesValidatorsService {
       const password = control.get(passowrdKey);
       const confirmRepeat = control.get(repeatKey);
       if(!password.value || !confirmRepeat.value){
-      
         return null;
       }
       if(password.value !== confirmRepeat.value){
-        console.log(control);
+        
         return { passwordMismatch: true };
       }
-      console.log(control);
       return null;
     };
   }
