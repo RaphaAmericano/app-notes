@@ -43,15 +43,14 @@ export class FormLoginComponent implements OnInit {
         (res) => {
           switch (res.response) {
             case "OK":
-              this.routerBuider.navigate(['board']);
+              
               this.authService.setLoggedStatus(true);
               this.authService.getUserLogged(user.email);
-             this.resetLogin();          
+              this.resetLogin();          
+              this.routerBuider.navigate(['board']);
               break;
             case "Email Inexistente":
-              console.log(res.response);
               this.mensagemErro.email = res.response;
-              console.log(this.mensagemErro.email);
               this.loginForm.controls.userEmail.setErrors({'incorrect': true})
               break;
             case "Senha Inválida":

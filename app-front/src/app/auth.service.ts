@@ -36,6 +36,7 @@ export class AuthService {
       (res) => { 
         this.userActive = res;
         this.setUserLocalStorage(this.userActive);
+        this.userActive = this.getUserActive();
       },
       (error) => { console.log(error) }
     );
@@ -58,8 +59,7 @@ export class AuthService {
     user.id = +localStorage.getItem("id");
     user.nome = localStorage.getItem("nome");
     user.email = localStorage.getItem("email");
-    this.userActive = user;
-    return this.userActive;
+    return user;
   }
 
 }
