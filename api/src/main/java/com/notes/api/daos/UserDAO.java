@@ -65,6 +65,20 @@ public class UserDAO {
             return false;
         }
     }
+
+    public boolean updateUser(User user){
+        String query = "UPDATE USERS SET NOME = ?, EMAIL = ? WHERE ID = ?";
+        try {
+            jdbcTemplate.update(query, user.getNome(), user.getEmail(), user.getId());
+            return true;
+        } catch (IncorrectResultSizeDataAccessException se ){
+            return false;
+        }
+    }
+    //to do
+    public boolean updatePassword(String password){
+        return true;
+    }
 //
 //    User atualizar(User user);
 //

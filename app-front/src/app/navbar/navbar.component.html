@@ -1,7 +1,8 @@
 <nz-page-header>
         <nz-page-header-title>Notes App</nz-page-header-title>  
         <nz-page-header-extra *ngIf="navMenu">
-          <button nz-button disabled>Profile</button>
-          <button nz-button nzType="primary" (click)="logoutUser()">Logout</button>
+          <button nz-button routerLink="board" >Board</button>
+          <button nz-button routerLink="profile" >Profile</button>
+          <button nz-button nzType="danger" (click)="logoutUser()">Logout</button>
         </nz-page-header-extra>
 </nz-page-header>

@@ -61,4 +61,15 @@ public class UserController {
         return new ResponseEntity<Boolean>(emailCheck, HttpStatus.OK);
     }
 
+    @PutMapping("update")
+    public ResponseEntity<Boolean> updateUser(@RequestBody User user ){
+        Boolean updateUserCheck = userService.updateUser(user);
+        if(updateUserCheck == null ){
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+        return new ResponseEntity<Boolean>(updateUserCheck, HttpStatus.OK);
+    }
+
+    //to do patch senha
+
 }

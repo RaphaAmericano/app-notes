@@ -1,0 +1,40 @@
+<div class="inner-content" nz-row nzType="flex" nzJustify="center">
+    <form nz-form [formGroup]="profileForm" (ngSubmit)="submitLogin()">
+        <nz-form-item>
+                <nz-form-control>
+                    <nz-input-group nzPrefixIcon="user">
+                        <input type="text" nz-input formControlName="userName" placeholder="Nome">
+                    </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-control>
+                    <nz-input-group nzPrefixIcon="mail">
+                        <input type="email" nz-input formControlName="userEmail" placeholder="Email">
+                    </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+    
+            <div formGroupName="userPassword">
+                <nz-form-item>
+                    <nz-form-control>
+                        <nz-input-group nzPrefixIcon="lock">
+                            <input type="password" nz-input formControlName="password" placeholder="Senha">
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+                <nz-form-item>
+                    <nz-form-control>
+                        <nz-input-group nzPrefixIcon="lock">
+                            <input type="password" nz-input formControlName="repeat" placeholder="Confirmar a Senha">
+                        </nz-input-group>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <nz-form-item>
+                <nz-form-control>
+                    <button nz-button [nzType]="'primary'">Atualizar</button>
+                </nz-form-control>
+            </nz-form-item>
+    </form>
+</div>

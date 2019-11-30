@@ -19,6 +19,7 @@ import { NoteComponent } from './note/note.component';
 import { TruncatePipe } from './pipes/truncate.pipe';
 import { ReversePipe } from './pipes/reverse.pipe';
 import { PasswordMatchDirective } from './directive/password-match.directive';
+import { ProfileComponent } from './profile/profile.component';
 
 registerLocaleData(en);
 
@@ -34,7 +35,8 @@ registerLocaleData(en);
     NoteComponent,
     TruncatePipe,
     ReversePipe,
-    PasswordMatchDirective
+    PasswordMatchDirective,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

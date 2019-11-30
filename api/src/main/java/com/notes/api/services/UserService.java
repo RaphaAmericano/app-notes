@@ -60,6 +60,14 @@ public class UserService {
         return user;
     }
 
+    public synchronized Boolean updateUser(User user){
+        Boolean check = userDAO.updateUser(user);
+        if(user == null ){
+            return null;
+        }
+        return check;
+    }
+
 //    @Autowired
 //    private UserRepository userRepository;
 //

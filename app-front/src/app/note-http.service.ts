@@ -53,4 +53,8 @@ export class NoteHttpService {
     return this.http.delete<boolean>(`/api/notes/${note.id}`, httpOptions );
   }
 
+  public updateUser(user:User): Observable<boolean> {
+    return this.http.put<boolean>(`/api/users/update`, httpOptions);
+  }
+
 }
