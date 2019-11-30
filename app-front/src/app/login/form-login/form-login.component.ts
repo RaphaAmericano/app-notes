@@ -49,7 +49,9 @@ export class FormLoginComponent implements OnInit {
              this.resetLogin();          
               break;
             case "Email Inexistente":
+              console.log(res.response);
               this.mensagemErro.email = res.response;
+              console.log(this.mensagemErro.email);
               this.loginForm.controls.userEmail.setErrors({'incorrect': true})
               break;
             case "Senha Inválida":

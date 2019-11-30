@@ -1,22 +1,26 @@
 <form nz-form [formGroup]="loginForm" (ngSubmit)="submitLogin()">
     <nz-form-item>
-        <nz-form-control nzErrorTip="{{ mensagemErro.email }}">
+        <nz-form-control nzErrorTip="{{ mensagemErro.email }}" nzSuccessTip="Usuário correto" nzHasFeedback>
             <nz-input-group nzPrefixIcon="mail">
                 <input type="email" nz-input formControlName="userEmail" placeholder="Email">
             </nz-input-group>
+            
         </nz-form-control>
+        <!-- <nz-alert *ngIf="signinForm.get('userEmail').hasError('checkEmail')" nzType="error" nzMessage="Usuário invalido"></nz-alert> -->
     </nz-form-item>
     <nz-form-item>
         <nz-form-control nzErrorTip="{{ mensagemErro.password }}">
             <nz-input-group nzPrefixIcon="lock">
                 <input type="password" nz-input formControlName="userPassword" placeholder="Senha">
-                
-            </nz-input-group>
-        </nz-form-control>
+            </nz-input-group> 
+       </nz-form-control>
+        <!-- <nz-alert *ngIf="signinForm.get('userPassword').hasError('incorrect')" nzType="error" nzMessage="Senha Inválida"></nz-alert> -->
+
     </nz-form-item>
     <nz-form-item>
         <nz-form-control>
-            <button nz-button [nzType]="'primary'">Login</button>
+            <button [disabled]="!loginForm.valid" nz-button [nzType]="'primary'">Login</button>
         </nz-form-control>
     </nz-form-item>
+
 </form>
