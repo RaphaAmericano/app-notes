@@ -8,10 +8,11 @@ import { Note } from './model/note';
 const httpOptions = {
   headers: new HttpHeaders({
     'Access-Control-Allow-Origin':'*',
+    'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type',
+    'Access-Control-Allow-Methods':'GET, HEAD, POST, PUT, PATCH, DELETE, OPTIONS',
     'Content-Type':  'application/json'
   })
 }
-
 @Injectable({
   providedIn: 'root'
 })
@@ -54,7 +55,7 @@ export class NoteHttpService {
   }
 
   public updateUser(user:User): Observable<boolean> {
-    return this.http.put<boolean>(`/api/users/update`, httpOptions);
+    return this.http.put<boolean>(`/api/users/update`,user, httpOptions);
   }
 
 }

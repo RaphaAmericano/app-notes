@@ -34,7 +34,11 @@ export class ProfileComponent implements OnInit {
   }
 
   public submitLogin():void {
-    this.noteHttp.updateUser(this.activeUser).subscribe(
+    const user:User = new User();
+    user.id = this.activeUser.id;
+    user.nome = this.profileForm.get('userName').value;
+    user.email = this.profileForm.get('userEmail').value;
+    this.noteHttp.updateUser(user).subscribe(
       (res) => console.log(res),
       (error) => console.log(error)
     )
