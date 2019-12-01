@@ -20,6 +20,7 @@ import { TruncatePipe } from './pipes/truncate.pipe';
 import { ReversePipe } from './pipes/reverse.pipe';
 import { PasswordMatchDirective } from './directive/password-match.directive';
 import { ProfileComponent } from './profile/profile.component';
+import { SearchPipe } from './pipes/search.pipe';
 
 registerLocaleData(en);
 
@@ -36,7 +37,8 @@ registerLocaleData(en);
     TruncatePipe,
     ReversePipe,
     PasswordMatchDirective,
-    ProfileComponent
+    ProfileComponent,
+    SearchPipe
   ],
   imports: [
     BrowserModule,

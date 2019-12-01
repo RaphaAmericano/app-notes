@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges, EventEmitter, Output } from '@angular/core';
 import { User } from 'src/app/model/user';
 import { Note } from 'src/app/model/note';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-note-list',
@@ -13,7 +14,9 @@ export class NoteListComponent implements OnInit, OnChanges {
   @Input() public listaNotas:Note[];
   @Output() public noteSelectEmmiter:EventEmitter<number> = new EventEmitter<number>();
   @Output() public newNoteEmmiter:EventEmitter<void> = new EventEmitter<void>();
-  constructor() { }
+  public searchForm:FormGroup;
+
+  constructor(private builder: FormBuilder) { }
 
   ngOnChanges(changes: SimpleChanges){
     // console.log(changes.listaNotas);
@@ -21,7 +24,9 @@ export class NoteListComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    
+    this.searchForm = this.builder.group({
+      query:[null]
+    })
   }
   
   public selectNote(value:number): void{

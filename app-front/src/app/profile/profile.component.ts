@@ -34,12 +34,10 @@ export class ProfileComponent implements OnInit {
   }
 
   public submitLogin():void {
-    this.noteHttp.updateUser(this.activeUser).toPromise().then(
-      (res) => { 
-        console.log(res);
-      },
-      (res) => { console.log(res)}
-    );
+    this.noteHttp.updateUser(this.activeUser).subscribe(
+      (res) => console.log(res),
+      (error) => console.log(error)
+    )
   }
 
 }

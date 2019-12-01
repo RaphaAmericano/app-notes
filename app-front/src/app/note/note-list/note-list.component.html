@@ -1,9 +1,9 @@
 <div>
-    <form nz-form>
+    <form nz-form [formGroup]="searchForm">
         <nz-form-item>
             <nz-form-control>
                 <nz-input-group nzPrefixIcon="search">
-                    <input nz-input type="search" name="query">
+                    <input nz-input type="search" formControlName="query">
                 </nz-input-group>
             </nz-form-control>
         </nz-form-item>
@@ -16,7 +16,7 @@
     <!-- button -->
     
     <nz-list [nzItemLayout]="'horizontal'" [nzLoading]="loading">
-        <nz-list-item *ngFor="let note of listaNotas | reverse; let i = index"> 
+        <nz-list-item *ngFor="let note of listaNotas | reverse  | search: searchForm.get('query').value; let i = index"> 
             <a (click)="selectNote(i)">
                 <nz-list-item-meta
                     [nzTitle]="note.texto | truncate:[85, '...']"
