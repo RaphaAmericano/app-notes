@@ -50,8 +50,6 @@ export class FormSigninComponent implements OnInit {
         if(data){
           this.resetForm();
           this.signinSucess = true;
-          this.authService.getUserLogged(user.email);
-          this.router.navigate(['board']);
         } else {
           this.signinSucess = false;
         }

@@ -19,18 +19,16 @@ export class NoteComponent implements OnInit, OnChanges {
 
   ngOnInit() {
       this.userLogged = this.authService.getUserActive();
-      console.log(this.userLogged);
+      
       this.authService.emitStatus();
       this.uploadListNote();
-      console.log(this.userLogged);
+      
   }
 
   ngOnChanges(){
-    console.log('View Init');
     this.userLogged = this.authService.getUserActive();
     this.authService.emitStatus();
     this.uploadListNote();
-    console.log(this.userLogged);
   }
 
   public changeActiveNote(value:number){

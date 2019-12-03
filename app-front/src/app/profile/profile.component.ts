@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { User } from '../model/user';
 import { AuthService } from '../auth.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit, OnDestroy {
 
   public activeUser:User;
   public profileForm:FormGroup;
@@ -36,6 +36,11 @@ export class ProfileComponent implements OnInit {
         repeat:[null, Validators.required]
       }, {validator: this.noteValidators.checkMatchPassword('password', 'repeat')}
     )
+  }
+
+  ngOnDestroy() {
+    this.router.navigate(['login']);
+    this.authService.clearUserLocalStorage(false);
   }
 
   public submitUpdate():void {
@@ -66,8 +71,6 @@ export class ProfileComponent implements OnInit {
     this.noteHttp.deleteUser(this.activeUser).subscribe(
       (res) => { 
         console.log(res);
-        this.router.navigate(['login']);
-        this.authService.clearUserLocalStorage(false);
       },
       (error) => console.log(error)
     )
