@@ -21,6 +21,7 @@ export class NoteListComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges){
     // console.log(changes.listaNotas);
     // console.log(this.listaNotas);
+    //console.log(changes);
   }
 
   ngOnInit() {

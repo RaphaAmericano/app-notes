@@ -38,13 +38,12 @@
                 <nz-form-control [nzSpan]="14">
                 <textarea 
                 nz-input formControlName="texto" 
-                (keyup)="saveNote()"
                 rows="10"
                 ></textarea>
                 </nz-form-control>
             </nz-form-item >
             <nz-form-item>
-                <button nz-button [disabled]="activeNote" (click)="addNewNote()">Nova nota</button>
+                <button nz-button [disabled]="activeNote != null" (click)="addNewNote()">Nova nota</button>
             </nz-form-item>
         </form>
     </div>

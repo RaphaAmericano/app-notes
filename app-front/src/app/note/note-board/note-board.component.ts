@@ -1,8 +1,9 @@
-import { Component, OnInit, Input, OnChanges, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, EventEmitter, Output, SimpleChanges } from '@angular/core';
 import { User } from 'src/app/model/user';
 import { Note } from 'src/app/model/note';
 import { NoteHttpService } from 'src/app/note-http.service';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { Observable, of } from 'rxjs';
 import { distinctUntilChanged, debounceTime } from 'rxjs/operators';
 
 @Component({
@@ -28,9 +29,14 @@ export class NoteBoardComponent implements OnInit, OnChanges {
     this.formTextContent = this.formBuilder.group({
       texto:[null, [Validators.required, Validators.minLength(10)]]   
     });
+    console.log(this.activeNote);
+    this.saveNote();
   }
 
-  ngOnChanges(){
+
+  ngOnChanges(changes:SimpleChanges){
+    // console.log(changes);
+
     if(this.formTextContent){
       if(this.activeNote !== undefined && this.activeNote !== null ){
         this.formTextContent.setValue({ texto: this.activeNote.texto });
@@ -59,16 +65,26 @@ export class NoteBoardComponent implements OnInit, OnChanges {
   }
 
   public saveNote(): void {
-
-    //todo: auto save ao retirar o teclado
-
-    // setTimeout(() => {
-    //   this.updateListEmmiter.emit();
-    //   this.noteHttp.updateUserNote(this.activeNote).subscribe(
-    //     res => console.log(res)
-    //   );
-    // }, 5000);
     
+    setInterval(
+      () => {
+        if( this.activeNote !== undefined  ){
+          console.log(this.formTextContent.get("texto").value == this.activeNote.texto); 
+          if(this.formTextContent.get("texto").value !== this.activeNote.texto){
+            let note = new Note();
+              note.id = this.activeNote.id;
+              note.texto = this.formTextContent.get('texto').value;
+              this.noteHttp.updateUserNote(note).subscribe(
+                (res)=> { 
+                  this.updateListEmmiter.emit();
+                },
+                (error) =>{
+                  console.log(error);
+                }
+              ) 
+          }
+        }
+    }, 10000)
   }
 
   public deleteNote(): void{
