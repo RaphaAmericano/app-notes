@@ -20,11 +20,13 @@ public class UserService {
     public synchronized boolean addUser(User user){
 
         // varificar email
-        User userToCheck = userDAO.getByEmail(user.getEmail());
-        if(userToCheck == null || user.getEmail().equals(userToCheck.getEmail())){
-            return false;
-        }
-
+        System.out.println(user.getEmail());
+        //User userToCheck = userDAO.getByEmail(user.getEmail());
+        //System.out.println(userToCheck.getEmail());
+//        if(user.getEmail().equals(userToCheck.getEmail())){
+//            return false;
+//        }
+        System.out.println("SERVICE TRUE");
         return userDAO.insertUser(user);
     }
 
@@ -68,6 +70,15 @@ public class UserService {
         return check;
     }
 
+    public synchronized Boolean deleteUser(int id){
+        Boolean check = userDAO.deleteUser(id);
+        if(check == null){
+            return null;
+        }
+        System.out.println("USER SERVICE");
+        System.out.println(check);
+        return check;
+    }
 //    @Autowired
 //    private UserRepository userRepository;
 //

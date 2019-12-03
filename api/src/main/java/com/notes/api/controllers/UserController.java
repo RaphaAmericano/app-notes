@@ -36,7 +36,7 @@ public class UserController {
     public ResponseEntity<Boolean> addUser(@RequestBody User user){
         boolean flag = userService.addUser(user);
         if(flag == false){
-            return new ResponseEntity<Boolean>(HttpStatus.CONFLICT);
+            return new ResponseEntity<Boolean>(flag, HttpStatus.CONFLICT);
         }
         return new ResponseEntity<Boolean>(flag, HttpStatus.OK);
     }
@@ -68,6 +68,15 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
         return new ResponseEntity<Boolean>(updateUserCheck, HttpStatus.OK);
+    }
+
+    @DeleteMapping("delete/{id}")
+    public ResponseEntity<Boolean> deleteUser(@PathVariable("id") int id ){
+        Boolean deleteUserCheck = userService.deleteUser(id);
+        if(deleteUserCheck == null ){
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+        return new ResponseEntity<Boolean>(deleteUserCheck, HttpStatus.OK);
     }
 
     //to do patch senha

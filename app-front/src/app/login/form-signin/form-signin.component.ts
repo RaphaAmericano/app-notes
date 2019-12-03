@@ -4,6 +4,8 @@ import { NoteHttpService } from 'src/app/note-http.service';
 import { User } from 'src/app/model/user';
 import { NotesValidatorsService } from 'src/app/notes-validators.service';
 import { MensagemErroSignin } from 'src/app/model/mensagem-erro-signin';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/auth.service';
 
 @Component({
   selector: 'app-form-signin',
@@ -18,8 +20,11 @@ export class FormSigninComponent implements OnInit {
                                               "Insira sua senha", 
                                               "Insira seu nome", 
                                               "Repita sua senha");
+  public signinSucess:boolean = undefined;
   constructor(private formBuilder:FormBuilder, 
               private http:NoteHttpService, 
+              private router:Router,
+              private authService: AuthService,
               private noteValidators:NotesValidatorsService ) { }
 
   ngOnInit() {
@@ -42,7 +47,14 @@ export class FormSigninComponent implements OnInit {
     this.http.postNewUser(user).subscribe(
       (data)=>{
         console.log(data);
-         
+        if(data){
+          this.resetForm();
+          this.signinSucess = true;
+          this.authService.getUserLogged(user.email);
+          this.router.navigate(['board']);
+        } else {
+          this.signinSucess = false;
+        }
       },(error) => {
         console.log(error);
       }

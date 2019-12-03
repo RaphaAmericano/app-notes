@@ -79,6 +79,17 @@ public class UserDAO {
     public boolean updatePassword(String password){
         return true;
     }
+
+    public boolean deleteUser(int id ){
+        String query = "DELETE FROM USERS WHERE ID = ?";
+        try {
+            jdbcTemplate.update(query, id);
+            return true;
+        } catch (IncorrectResultSizeDataAccessException se ){
+            return false;
+        }
+    }
+
 //
 //    User atualizar(User user);
 //

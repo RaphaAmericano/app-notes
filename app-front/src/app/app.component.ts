@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from './auth.service';
 
@@ -7,7 +7,7 @@ import { AuthService } from './auth.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit, OnChanges{
   
   constructor(private router:Router, private authService:AuthService){}
 
@@ -17,4 +17,7 @@ export class AppComponent implements OnInit{
     }
   }
 
+  ngOnChanges(changes:any ){
+    console.log(changes);
+  }
 }
