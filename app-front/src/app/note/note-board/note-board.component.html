@@ -1,39 +1,51 @@
-<nz-page-header nzTitle="{{ user.nome }}" nzSubtitle="{{ user.email }}"> 
-        <nz-page-header-extra *ngIf="activeNote">
-            <button 
-            nz-button 
-            nzType="default" 
-            nzShape="circle"
-            nz-popover
-            nzPopoverTitle="Última Edição"
-            nzPopoverContent="{{activeNote.data_edicao | date : 'short' }}">
-                <i nz-icon nzType="clock-circle"></i>
-            </button>
-            <button 
-            nz-button 
-            nzType="danger" 
-            nz-popover
-            nzPopoverTitle="Confirma ?"
-            [(nzVisible)]="popOverDeleteVisibility"
-            [nzPopoverContent]="deleteButtonTemplate"
-            nzPopoverTrigger="click"
-            nzShape="circle">
-                <i nz-icon nzType="delete"></i>
-            </button>
-            <ng-template #deleteButtonTemplate>
-                <a (click)="deleteNote()">Deletar</a>
-            </ng-template>
-            <button nz-button nzType="default" nzShape="circle"><i nz-icon nzType="dash"></i></button>
-            <button nz-button nzType="primary" nzShape="circle"><i nz-icon nzType="info-circle"></i></button>
-        </nz-page-header-extra>
-</nz-page-header>
-<form nz-form [formGroup]="formTextContent">
-    <nz-form-item>
-        <nz-form-control [nzSpan]="14">
-        <textarea nz-input formControlName="texto" (keyup)="saveNote()"></textarea>
-        </nz-form-control>
-    </nz-form-item >
-    <nz-form-item>
-        <button nz-button [disabled]="activeNote" (click)="addNewNote()">Nova nota</button>
-    </nz-form-item>
-</form>
+<div nz-row>
+    <div nz-col nzSpan="24">
+        <nz-page-header nzTitle="{{ user.nome }}" nzSubtitle="{{ user.email }}"> 
+                <nz-page-header-extra *ngIf="activeNote">
+                    <button 
+                    nz-button 
+                    nzType="default" 
+                    nzShape="circle"
+                    nz-popover
+                    nzPopoverTitle="Última Edição"
+                    nzPopoverContent="{{activeNote.data_edicao | date : 'short' }}">
+                        <i nz-icon nzType="clock-circle"></i>
+                    </button>
+                    <button 
+                    nz-button 
+                    nzType="danger" 
+                    nz-popover
+                    nzPopoverTitle="Confirma ?"
+                    [(nzVisible)]="popOverDeleteVisibility"
+                    [nzPopoverContent]="deleteButtonTemplate"
+                    nzPopoverTrigger="click"
+                    nzShape="circle">
+                        <i nz-icon nzType="delete"></i>
+                    </button>
+                    <ng-template #deleteButtonTemplate>
+                        <a (click)="deleteNote()">Deletar</a>
+                    </ng-template>
+                    <button nz-button nzType="default" nzShape="circle"><i nz-icon nzType="dash"></i></button>
+                    <button nz-button nzType="primary" nzShape="circle"><i nz-icon nzType="info-circle"></i></button>
+                </nz-page-header-extra>
+        </nz-page-header>
+    </div>
+</div>
+<div nz-row>
+    <div nz-col nzSpan="24">
+        <form nz-form [formGroup]="formTextContent">
+            <nz-form-item>
+                <nz-form-control [nzSpan]="14">
+                <textarea 
+                nz-input formControlName="texto" 
+                (keyup)="saveNote()"
+                rows="10"
+                ></textarea>
+                </nz-form-control>
+            </nz-form-item >
+            <nz-form-item>
+                <button nz-button [disabled]="activeNote" (click)="addNewNote()">Nova nota</button>
+            </nz-form-item>
+        </form>
+    </div>
+</div>

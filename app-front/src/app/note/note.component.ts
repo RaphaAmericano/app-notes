@@ -18,11 +18,9 @@ export class NoteComponent implements OnInit, OnChanges {
   constructor(private authService: AuthService, private noteHttp:NoteHttpService) { }
 
   ngOnInit() {
-      this.userLogged = this.authService.getUserActive();
-      
+      this.userLogged = this.authService.getUserActive();  
       this.authService.emitStatus();
       this.uploadListNote();
-      
   }
 
   ngOnChanges(){
