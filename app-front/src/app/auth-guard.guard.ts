@@ -18,5 +18,5 @@ export class AuthGuardGuard implements CanActivate {
     }
     return this.authService.getLoggedStatus();
   }
-  
+
 }

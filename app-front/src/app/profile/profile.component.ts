@@ -26,7 +26,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.activeUser = this.authService.getUserActive();
-    console.log(this.activeUser);
     this.profileForm = this.builder.group({
       userName:[this.activeUser.nome],
       userEmail:[this.activeUser.email]
@@ -50,7 +49,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
     user.email = this.profileForm.get('userEmail').value;
     this.noteHttp.updateUser(user).subscribe(
       (res) => {
-        console.log(res);
         this.updateSuccess = true;
       },
       (error) => console.log(error)

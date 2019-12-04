@@ -34,9 +34,8 @@ export class AuthService {
   public getUserLogged(email: string ): void {
     this.http.getUserByEmail(email).toPromise().then(
       (res) => { 
-        this.userActive = res;
-        this.setUserLocalStorage(this.userActive);
-        this.userActive = this.getUserActive();
+        // console.log(res);
+        this.setUserLocalStorage(res);
       },
       (error) => { console.log(error) }
     );
@@ -54,12 +53,16 @@ export class AuthService {
     }
   }
 
-  public getUserActive():User {
+  public setUserActive():User {
     let user:User = new User();
     user.id = +localStorage.getItem("id");
     user.nome = localStorage.getItem("nome");
     user.email = localStorage.getItem("email");
     return user;
+  }
+
+  public getUserActive():User {
+    return this.userActive;
   }
 
 }

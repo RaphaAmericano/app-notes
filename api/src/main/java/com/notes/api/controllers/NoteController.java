@@ -55,7 +55,6 @@ public class NoteController {
 
     @PatchMapping("/{id}")
     public ResponseEntity<Boolean> updateNote(@PathVariable("id") int id, @RequestBody Note note){
-
         boolean flag = noteService.updateNote(id, note);
         System.out.println(flag);
         if(flag == false){

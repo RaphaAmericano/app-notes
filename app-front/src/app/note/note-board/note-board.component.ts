@@ -4,7 +4,6 @@ import { Note } from 'src/app/model/note';
 import { NoteHttpService } from 'src/app/note-http.service';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Observable, of } from 'rxjs';
-import { distinctUntilChanged, debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-note-board',
@@ -69,7 +68,6 @@ export class NoteBoardComponent implements OnInit, OnChanges {
     setInterval(
       () => {
         if( this.activeNote !== undefined  ){
-          console.log(this.formTextContent.get("texto").value == this.activeNote.texto); 
           if(this.formTextContent.get("texto").value !== this.activeNote.texto){
             let note = new Note();
               note.id = this.activeNote.id;
@@ -84,7 +82,7 @@ export class NoteBoardComponent implements OnInit, OnChanges {
               ) 
           }
         }
-    }, 10000)
+    }, 30000)
   }
 
   public deleteNote(): void{

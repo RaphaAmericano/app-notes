@@ -75,8 +75,6 @@ public class UserService {
         if(check == null){
             return null;
         }
-        System.out.println("USER SERVICE");
-        System.out.println(check);
         return check;
     }
 //    @Autowired

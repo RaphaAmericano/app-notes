@@ -39,7 +39,7 @@ export class FormLoginComponent implements OnInit {
       if(!this.loginForm.valid ){ 
         return;
       }
-      this.service.checkUser(user).toPromise().then(
+      this.service.checkUser(user).subscribe(
         (res) => {
           switch (res.response) {
             case "OK":
@@ -47,7 +47,11 @@ export class FormLoginComponent implements OnInit {
               this.authService.setLoggedStatus(true);
               this.authService.getUserLogged(user.email);
               this.resetLogin();          
-              this.routerBuider.navigate(['board']);
+              setTimeout(
+                ()=>{
+                  this.routerBuider.navigate(['board']);     
+                }, 1000
+              )
               break;
             case "Email Inexistente":
               this.mensagemErro.email = res.response;

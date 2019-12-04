@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges, EventEmitter, Output  } from '@angular/core';
 import { User } from 'src/app/model/user';
 import { Note } from 'src/app/model/note';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -8,7 +8,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
   templateUrl: './note-list.component.html',
   styleUrls: ['./note-list.component.scss']
 })
-export class NoteListComponent implements OnInit, OnChanges {
+export class NoteListComponent implements OnInit, OnChanges  {
 
   @Input() public user:User;
   @Input() public listaNotas:Note[];
@@ -25,11 +25,12 @@ export class NoteListComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
+    console.log(this.user);
     this.searchForm = this.builder.group({
       query:[null]
     })
   }
-  
+
   public selectNote(value:number): void{
     this.noteSelectEmmiter.emit(value);
   }
