@@ -77,6 +77,24 @@ public class UserService {
         }
         return check;
     }
+
+    public synchronized Boolean updatePassword(User user){
+        Boolean check = userDAO.updatePassword(user);
+        if(check == null){
+            return null;
+        }
+        return check;
+    }
+
+    public synchronized Boolean checkPassword(User user){
+        User check = userDAO.getById(user.getId());
+        if(user.getSenha().equals(check.getSenha())){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 //    @Autowired
 //    private UserRepository userRepository;
 //

@@ -61,6 +61,15 @@ public class UserController {
         return new ResponseEntity<Boolean>(emailCheck, HttpStatus.OK);
     }
 
+    @PostMapping("check/password")
+    public ResponseEntity<Boolean> checkPassword(@RequestBody User user){
+        Boolean flag = userService.checkPassword(user);
+        if(flag == null ){
+            return new ResponseEntity<Boolean>(flag, HttpStatus.CONFLICT);
+        }
+        return new ResponseEntity<Boolean>(flag, HttpStatus.OK);
+    }
+
     @PutMapping("update")
     public ResponseEntity<Boolean> updateUser(@RequestBody User user ){
         Boolean updateUserCheck = userService.updateUser(user);
@@ -79,6 +88,15 @@ public class UserController {
         return new ResponseEntity<Boolean>(deleteUserCheck, HttpStatus.OK);
     }
 
-    //to do patch senha
+    @PutMapping("update/password")
+    public ResponseEntity<Boolean> updatePassword(@RequestBody User user){
+        Boolean flag = userService.updatePassword(user);
+        if(flag == null){
+            return new ResponseEntity<Boolean>(HttpStatus.CONFLICT);
+        }
+        return new ResponseEntity<Boolean>(flag, HttpStatus.OK);
+    }
+
+
 
 }

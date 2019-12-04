@@ -34,7 +34,6 @@ export class AuthService {
   public getUserLogged(email: string ): void {
     this.http.getUserByEmail(email).toPromise().then(
       (res) => { 
-        // console.log(res);
         this.setUserLocalStorage(res);
       },
       (error) => { console.log(error) }

@@ -28,7 +28,6 @@ export class NoteBoardComponent implements OnInit, OnChanges {
     this.formTextContent = this.formBuilder.group({
       texto:[null, [Validators.required, Validators.minLength(10)]]   
     });
-    console.log(this.activeNote);
     this.saveNote();
   }
 

@@ -1,6 +1,11 @@
 <div class="inner-content" nz-row nzType="flex" nzJustify="center">
-    <form nz-form [formGroup]="profileForm" (ngSubmit)="submitUpdate()">
-        <nz-form-item>
+    
+        <h4 nz-title>Atualizar informacoes</h4>
+    
+        <form
+            *ngIf="!updateSuccess" 
+            nz-form [formGroup]="profileForm" (ngSubmit)="submitUpdate()">
+            <nz-form-item>
                 <nz-form-control>
                     <nz-input-group nzPrefixIcon="user">
                         <input type="text" nz-input formControlName="userName" placeholder="Nome">
@@ -14,8 +19,6 @@
                     </nz-input-group>
                 </nz-form-control>
             </nz-form-item>
-    
-            
             <nz-form-item>
                 <nz-form-control>
                     <button nz-button [disabled]="updateSuccess" [nzType]="'primary'">Atualizar</button>
@@ -23,14 +26,41 @@
                     nz-button 
                     nzType="danger" 
                     nz-popover
-                    nzPopoverTitle="Deseja exluir o usuário? Essa ação não pode ser desfeita"
+                    nzPopoverTitle="Deseja exluir o usuário? Essa ação não pode ser desfeita. Digite a senha para excluir o usuário"
                     [(nzVisible)]="popOverDeleteVisibility"
                     [nzPopoverContent]="deleteButtonTemplate"
                     nzPopoverTrigger="click">
                         Excluir
                     </button>
                     <ng-template #deleteButtonTemplate>
-                        <a (click)="deleteUser()">Deletar</a>
+                        <form *ngIf="!deleteUserSuccess" nz-form [formGroup]="deleteForm"  (ngSubmit)="deleteUser()">
+                            <nz-form-item>
+                                <nz-form-control>
+                                    <nz-input-group>
+                                        <input 
+                                        nz-input 
+                                        type="password" 
+                                        formControlName="password" 
+                                        placeholder="Password">
+                                    </nz-input-group>
+                                </nz-form-control>
+                            </nz-form-item>
+                            <nz-form-item>
+                                <nz-form-control>
+                                    <nz-input-group>
+                                        <button 
+                                        nzType="danger"
+                                        nz-button [disabled]="!deleteForm.valid">Deletar</button>
+                                    </nz-input-group>
+                                </nz-form-control>
+                            </nz-form-item>
+                        </form>
+                        <nz-alert 
+                        *ngIf="deleteUserSuccess"
+                        nzType="success"
+                        nzMessage="Usuário excluído com sucesso."
+                        nzDescription="Essa operação não pode ser desfeita. Você será redirecionado em instantens"
+                        nzShowIcon></nz-alert>
                     </ng-template>
                 </nz-form-control>
                 <a nz-button
@@ -39,10 +69,19 @@
                     (click)="newUpdate()"
                     >Nova Atualização</a>
             </nz-form-item> 
-    </form>
+        </form>
+
+        <nz-alert 
+        *ngIf="updateSuccess"
+        nzType="success"
+        nzMessage="Password atualizado com sucesso"
+        nzShowIcon>
+        </nz-alert>
+    
 </div>
 <div class="inner-content" nz-row nzType="flex" nzJustify="center">
-    <form nz-form [formGroup]="userPassword" (ngSubmit)="submitNewPassword()">
+    <h4>Atualizar Senha</h4>
+    <form *ngIf="!passworUpdateSuccess" nz-form [formGroup]="userPassword" (ngSubmit)="submitNewPassword()">
         <nz-form-item>
             <nz-form-control>
                 <nz-input-group nzPrefixIcon="lock">
@@ -57,5 +96,16 @@
                 </nz-input-group>
             </nz-form-control>
         </nz-form-item>
+        <nz-form-item>
+            <nz-form-control>
+                <button nz-button [disabled]="!userPassword.valid" [nzType]="'primary'">Atualizar Password</button>
+            </nz-form-control>
+        </nz-form-item>
     </form>
+    <nz-alert 
+    *ngIf="passworUpdateSuccess"
+      nzType="success"
+      nzMessage="Password atualizado com sucesso"
+      nzShowIcon>
+    </nz-alert>
 </div>

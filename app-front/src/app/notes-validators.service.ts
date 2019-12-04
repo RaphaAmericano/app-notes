@@ -3,6 +3,7 @@ import { AbstractControl, AsyncValidatorFn, FormGroup, ValidatorFn } from '@angu
 import { NoteHttpService } from './note-http.service';
 import { Observable, of } from 'rxjs';
 import { map, distinctUntilChanged, debounceTime, take, switchMap } from 'rxjs/operators';
+import { User } from './model/user';
 @Injectable({
   providedIn: 'root'
 })
@@ -20,6 +21,24 @@ export class NotesValidatorsService {
           map( res => {
             if(res == exists ){
               return { checkEmail: res };
+            }
+            return null;
+          })
+        ))
+      )
+    }
+  }
+
+  public passwordCheckValidator() : AsyncValidatorFn {
+    return (control: AbstractControl): Observable<{[key: string]: any} | null> => {
+      return control.valueChanges.pipe(
+        debounceTime(500),
+        take(1),
+        switchMap( () => 
+         this.httpNote.checkUserPassword(control.value, +localStorage.getItem("id")).pipe(
+          map( res => {
+            if(res == false ){
+              return { checkPassword: res}
             }
             return null;
           })

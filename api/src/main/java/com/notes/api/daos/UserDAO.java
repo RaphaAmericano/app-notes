@@ -29,6 +29,17 @@ public class UserDAO {
         return this.jdbcTemplate.query(query, rowMapper);
     }
 
+    public User getById(int id){
+        String query = "SELECT * FROM USERS WHERE ID = ? LIMIT 1";
+        RowMapper<User> rowMapper = new UserMapper();
+        try{
+            User user = this.jdbcTemplate.queryForObject(query, rowMapper, id);
+            return user;
+        } catch (IncorrectResultSizeDataAccessException se ){
+            return null;
+        }
+    }
+
     public User getByEmail(String email){
         String query = "SELECT * FROM USERS WHERE EMAIL = ? LIMIT 1";
         RowMapper<User> rowMapper = new UserMapper();
@@ -51,11 +62,7 @@ public class UserDAO {
             return null;
         }
     }
-//
-//    List<User> listarUser();
-//
-//    User listarPorId(int id);
-//
+
     public boolean insertUser(User user){
         String query = "INSERT INTO USERS(NOME, EMAIL, SENHA) VALUES(?, ?, ?)";
         try {
@@ -75,9 +82,15 @@ public class UserDAO {
             return false;
         }
     }
-    //to do
-    public boolean updatePassword(String password){
-        return true;
+
+    public boolean updatePassword(User user){
+        String query = "UPDATE USERS SET SENHA = ? WHERE ID = ?";
+        try {
+            jdbcTemplate.update(query, user.getSenha(), user.getId());
+            return true;
+        } catch(IncorrectResultSizeDataAccessException se) {
+            return false;
+        }
     }
 
     public boolean deleteUser(int id ){
@@ -89,10 +102,5 @@ public class UserDAO {
             return false;
         }
     }
-
-//
-//    User atualizar(User user);
-//
-//    void remover(int id);
 
 }
