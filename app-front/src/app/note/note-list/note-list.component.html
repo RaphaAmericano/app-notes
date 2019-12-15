@@ -24,7 +24,7 @@
     
     <!-- button -->
     
-    <nz-list [nzItemLayout]="'horizontal'" [nzLoading]="loading">
+    <nz-list [nzItemLayout]="'horizontal'">
         <nz-list-item *ngFor="let note of listaNotas | reverse  | search: searchForm.get('query').value; let i = index"> 
             <a (click)="selectNote(i)">
                 <nz-list-item-meta

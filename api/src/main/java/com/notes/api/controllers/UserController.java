@@ -14,7 +14,7 @@ import java.util.Properties;
 
 
 @Controller
-@RequestMapping("users")
+@RequestMapping("api/users")
 public class UserController {
 
     @Autowired
