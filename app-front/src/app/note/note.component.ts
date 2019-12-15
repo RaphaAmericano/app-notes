@@ -22,7 +22,6 @@ export class NoteComponent implements OnInit {
       this.userLogged.nome = localStorage.getItem("nome");
       this.userLogged.email = localStorage.getItem("email");
       this.userLogged.senha = localStorage.getItem("senha");
-      console.log(this.userLogged);
     }
 
   ngOnInit() {
@@ -31,11 +30,13 @@ export class NoteComponent implements OnInit {
   }
 
   ngOnChanges(){
+    console.log(this.activeNote);
     this.authService.emitStatus();
     this.uploadListNote();
   }
  
-  public changeActiveNote(value:number){
+  public changeActiveNote(value?:number){
+    console.log(value);
     this.activeNote = this.listaNotas[value];
   }
 

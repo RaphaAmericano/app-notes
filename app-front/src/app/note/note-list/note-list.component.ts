@@ -25,7 +25,6 @@ export class NoteListComponent implements OnInit, OnChanges  {
   }
 
   ngOnInit() {
-    console.log(this.user);
     this.searchForm = this.builder.group({
       query:[null]
     })

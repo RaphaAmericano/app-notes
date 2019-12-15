@@ -51,24 +51,24 @@ export class NoteBoardComponent implements OnInit, OnChanges {
     const newNote = new Note();
     newNote.texto = this.formTextContent.get("texto").value;
     newNote.id_user = parseInt(localStorage.getItem("id")); 
-    this.noteHttp.postNewNote(newNote).toPromise()
-      .then(
+    this.noteHttp.postNewNote(newNote).subscribe(
         (res) => { 
+          this.noteCreatedEmmiter.emit();
           this.updateListEmmiter.emit(); 
         },
-        (error) => { console.log(error),
-        setTimeout(() => { this.noteCreatedEmmiter.emit() }, 500 )  
+        (error) => { console.log(error)
       }
       );
   }
 
   public saveNote(): void {
-    
+    console.log(this.formTextContent.get('texto').value)
+    console.log(this.activeNote);
     setInterval(
       () => {
         if( this.activeNote !== undefined  ){
           if(this.formTextContent.get("texto").value !== this.activeNote.texto){
-            let note = new Note();
+              let note = new Note();
               note.id = this.activeNote.id;
               note.texto = this.formTextContent.get('texto').value;
               this.noteHttp.updateUserNote(note).subscribe(
@@ -81,14 +81,13 @@ export class NoteBoardComponent implements OnInit, OnChanges {
               ) 
           }
         }
-    }, 30000)
+    }, 3000)
   }
 
   public deleteNote(): void{
     this.popOverDeleteVisibility = false;
     this.noteHttp.deleteUserNote(this.activeNote).toPromise().then(
       (res) => {
-        console.log(res)
         this.updateListEmmiter.emit();
         this.formTextContent.reset();
         this.activeNote = null;
