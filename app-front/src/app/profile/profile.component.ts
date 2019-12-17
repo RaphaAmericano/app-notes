@@ -68,7 +68,6 @@ export class ProfileComponent implements OnInit {
         this.passworUpdateSuccess = true;
         this.authService.getUserLogged(this.activeUser.email);
         this.userPassword.reset();
-        console.log(res);
       },
       (error) => {
         console.log(error);
@@ -86,7 +85,6 @@ export class ProfileComponent implements OnInit {
         this.authService.setLoggedStatus(false);
         this.deleteForm.reset();
         this.deleteUserSuccess = true;
-        console.log(res);
         setTimeout(()=>{
           this.router.navigate(['login']);
         }, 4000)
