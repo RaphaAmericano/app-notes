@@ -9,6 +9,6 @@ public class CustomizationBean implements WebServerFactoryCustomizer<Configurabl
     // todo: url da api diferente do cliente
     @Override
     public void customize(ConfigurableServletWebServerFactory container){
-        //container.setContextPath("/api");
+        //container.setContextPath("/");
     }
 }
