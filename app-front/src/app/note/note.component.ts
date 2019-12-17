@@ -26,25 +26,30 @@ export class NoteComponent implements OnInit {
 
   ngOnInit() {
       this.authService.emitStatus();
-      this.uploadListNote();
+      this.updateListNote();
   }
 
   ngOnChanges(){
     console.log(this.activeNote);
     this.authService.emitStatus();
-    this.uploadListNote();
+    this.updateListNote();
   }
  
   public changeActiveNote(value?:number){
-    console.log(value);
-    this.activeNote = this.listaNotas[value];
+    if(value == undefined){
+      setTimeout(()=>{
+        this.activeNote = this.listaNotas[0];
+      }, 50);
+    } else {
+      this.activeNote = this.listaNotas[value];
+    } 
   }
 
   public newNote(){
     this.activeNote = null; 
   }
 
-  public uploadListNote(): void {
+  public updateListNote(): void {
     this.noteHttp.getAllUserNotes(this.userLogged.id).toPromise()
       .then(
         (res) => {

@@ -5,8 +5,8 @@
     nzMd="12"
     [user]="userLogged" 
     [activeNote]="activeNote" 
-    (updateListEmmiter)="uploadListNote()"
-    (noteCreatedEmmiter)="changeActiveNote(0)"></app-note-board>
+    (updateListEmmiter)="updateListNote()"
+    (noteCreatedEmmiter)="changeActiveNote()"></app-note-board>
     <app-note-list 
     nz-col 
     nzXs="24"

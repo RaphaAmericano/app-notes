@@ -1,8 +1,10 @@
 <div class="inner-content" nz-row nzType="flex" nzJustify="center">
-    
-        <h4 nz-title>Atualizar Informações</h4>
-    
-        <form
+        <div nz-col nzSpan="24">
+            <h4 nz-title>Atualizar Informações</h4>
+        </div>
+        
+        <div nz-col nzSpan="24">
+            <form
             *ngIf="!updateSuccess" 
             nz-form [formGroup]="profileForm" (ngSubmit)="submitUpdate()">
             <nz-form-item>
@@ -76,35 +78,40 @@
         nzMessage="Password atualizado com sucesso"
         nzShowIcon>
         </nz-alert>
-    
+    </div>
 </div>
+
 <div class="inner-content" nz-row nzType="flex" nzJustify="center">
-    <h4>Atualizar Senha</h4>
-    <form *ngIf="!passworUpdateSuccess" nz-form [formGroup]="userPassword" (ngSubmit)="submitNewPassword()">
-        <nz-form-item>
-            <nz-form-control>
-                <nz-input-group nzPrefixIcon="lock">
-                    <input type="password" nz-input formControlName="password" placeholder="Senha">
-                </nz-input-group>
-            </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-            <nz-form-control>
-                <nz-input-group nzPrefixIcon="lock">
-                    <input type="password" nz-input formControlName="repeat" placeholder="Confirmar a Senha">
-                </nz-input-group>
-            </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-            <nz-form-control>
-                <button nz-button [disabled]="!userPassword.valid" [nzType]="'primary'">Atualizar Password</button>
-            </nz-form-control>
-        </nz-form-item>
-    </form>
-    <nz-alert 
-    *ngIf="passworUpdateSuccess"
-      nzType="success"
-      nzMessage="Password atualizado com sucesso"
-      nzShowIcon>
-    </nz-alert>
+    <div nz-col nzSpan="24">
+        <h4>Atualizar Senha</h4>
+    </div>
+    <div nz-col nzSpan="24">
+        <form *ngIf="!passworUpdateSuccess" nz-form [formGroup]="userPassword" (ngSubmit)="submitNewPassword()">
+            <nz-form-item>
+                <nz-form-control>
+                    <nz-input-group nzPrefixIcon="lock">
+                        <input type="password" nz-input formControlName="password" placeholder="Senha">
+                    </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-control>
+                    <nz-input-group nzPrefixIcon="lock">
+                        <input type="password" nz-input formControlName="repeat" placeholder="Confirmar a Senha">
+                    </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-control>
+                    <button nz-button [disabled]="!userPassword.valid" [nzType]="'primary'">Atualizar Password</button>
+                </nz-form-control>
+            </nz-form-item>
+        </form>
+        <nz-alert 
+        *ngIf="passworUpdateSuccess"
+          nzType="success"
+          nzMessage="Password atualizado com sucesso"
+          nzShowIcon>
+        </nz-alert>
+    </div>
 </div>

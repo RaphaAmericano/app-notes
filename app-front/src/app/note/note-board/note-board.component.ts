@@ -13,7 +13,6 @@ import { Observable, of } from 'rxjs';
 export class NoteBoardComponent implements OnInit, OnChanges {
 
   public popOverDeleteVisibility:boolean;
-
   @Input() public user:User;
   @Input() public activeNote:Note;
   @Output() public updateListEmmiter:EventEmitter<void> = new EventEmitter<void>();
@@ -28,13 +27,11 @@ export class NoteBoardComponent implements OnInit, OnChanges {
     this.formTextContent = this.formBuilder.group({
       texto:[null, [Validators.required, Validators.minLength(10)]]   
     });
-    this.saveNote();
+    this.autoSaveNote();
   }
 
 
   ngOnChanges(changes:SimpleChanges){
-    // console.log(changes);
-
     if(this.formTextContent){
       if(this.activeNote !== undefined && this.activeNote !== null ){
         this.formTextContent.setValue({ texto: this.activeNote.texto });
@@ -53,36 +50,41 @@ export class NoteBoardComponent implements OnInit, OnChanges {
     newNote.id_user = parseInt(localStorage.getItem("id")); 
     this.noteHttp.postNewNote(newNote).subscribe(
         (res) => { 
-          this.noteCreatedEmmiter.emit();
           this.updateListEmmiter.emit(); 
         },
         (error) => { console.log(error)
+        },
+        () => {
+          this.noteCreatedEmmiter.emit();
         }
       )
   }
 
-  public saveNote(): void {
+  public autoSaveNote(): void {
     setInterval(
       () => {
-        
         if( this.activeNote !== undefined  ){
-          console.log(this.formTextContent.get("texto").value !== this.activeNote.texto);
           if(this.formTextContent.get("texto").value !== this.activeNote.texto){
-              let note = new Note();
-              note.id = this.activeNote.id;
-              note.texto = this.formTextContent.get('texto').value;
-              this.noteHttp.updateUserNote(note).subscribe(
-                (res)=> { 
-                  this.updateListEmmiter.emit();
-                },
-                (error) =>{
-                  console.log(error);
-                }
-              ) 
+              this.saveNote();
           }
-        }
-        
+        }  
     }, 30000)
+  }
+
+  public saveNote(): void{
+    let note = new Note();
+    note.id = this.activeNote.id;
+    note.texto = this.formTextContent.get('texto').value;
+    if(note.texto != null ){
+      this.noteHttp.updateUserNote(note).subscribe(
+        (res)=> { 
+          this.updateListEmmiter.emit();
+        },
+        (error) =>{
+          console.log(error);
+        }
+      )
+    }
   }
 
   public deleteNote(): void{
