@@ -11,7 +11,9 @@ export class SearchPipe implements PipeTransform {
     if(!searchText){ return notes; };
     searchText = searchText.toLowerCase();
     return notes.filter( note => {
-      return note.texto.toLowerCase().includes(searchText);
+      if(note.texto != null ){
+        return note.texto.toLowerCase().includes(searchText);
+      }
     });
   }
 

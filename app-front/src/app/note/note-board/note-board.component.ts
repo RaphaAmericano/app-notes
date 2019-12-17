@@ -62,26 +62,27 @@ export class NoteBoardComponent implements OnInit, OnChanges {
   }
 
   public saveNote(): void {
-    console.log(this.formTextContent.get('texto').value)
-    console.log(this.activeNote);
-    // setInterval(
-    //   () => {
-    //     if( this.activeNote !== undefined  ){
-    //       if(this.formTextContent.get("texto").value !== this.activeNote.texto){
-    //           let note = new Note();
-    //           note.id = this.activeNote.id;
-    //           note.texto = this.formTextContent.get('texto').value;
-    //           this.noteHttp.updateUserNote(note).subscribe(
-    //             (res)=> { 
-    //               this.updateListEmmiter.emit();
-    //             },
-    //             (error) =>{
-    //               console.log(error);
-    //             }
-    //           ) 
-    //       }
-    //     }
-    // }, 3000)
+    setInterval(
+      () => {
+        
+        if( this.activeNote !== undefined  ){
+          console.log(this.formTextContent.get("texto").value !== this.activeNote.texto);
+          if(this.formTextContent.get("texto").value !== this.activeNote.texto){
+              let note = new Note();
+              note.id = this.activeNote.id;
+              note.texto = this.formTextContent.get('texto').value;
+              this.noteHttp.updateUserNote(note).subscribe(
+                (res)=> { 
+                  this.updateListEmmiter.emit();
+                },
+                (error) =>{
+                  console.log(error);
+                }
+              ) 
+          }
+        }
+        
+    }, 30000)
   }
 
   public deleteNote(): void{
