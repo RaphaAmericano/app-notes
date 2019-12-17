@@ -61,4 +61,7 @@ typings/
 .next
 
 #Mac System Files
-*.DS_Store
+**.DS_Store
+
+#Angular Deploy on Spring Static
+**/resources/static/
