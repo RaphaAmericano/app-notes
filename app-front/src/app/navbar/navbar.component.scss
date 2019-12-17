@@ -1,3 +1,14 @@
 .ant-page-header-heading-title {
     color: #FFF;
 }
+
+nz-page-header {
+    
+}
+
+button {
+    @media screen and (max-device-width : 787px) {
+        margin-top: 6px;
+        margin-bottom: 6px;
+    }
+}

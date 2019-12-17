@@ -2,3 +2,9 @@ nz-content {
     padding: 0 50px;
     margin-top: 32px;
 }
+
+nz-header {
+    @media screen and (max-device-width : 787px) {
+        height: auto;
+    }
+}
