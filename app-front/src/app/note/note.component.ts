@@ -30,7 +30,6 @@ export class NoteComponent implements OnInit {
   }
 
   ngOnChanges(){
-    console.log(this.activeNote);
     this.authService.emitStatus();
     this.updateListNote();
   }
@@ -41,7 +40,12 @@ export class NoteComponent implements OnInit {
         this.activeNote = this.listaNotas[0];
       }, 50);
     } else {
-      this.activeNote = this.listaNotas[value];
+      const noteSelected = this.listaNotas.filter( note => {
+        if(note.id == value){
+          return note; 
+        }
+      });
+      this.activeNote = noteSelected[0];
     } 
   }
 
