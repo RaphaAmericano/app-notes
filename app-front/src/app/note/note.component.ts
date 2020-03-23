@@ -45,6 +45,7 @@ export class NoteComponent implements OnInit {
           return note; 
         }
       });
+      console.log(noteSelected);
       this.activeNote = noteSelected[0];
     } 
   }

@@ -21,6 +21,7 @@ import { ReversePipe } from './pipes/reverse.pipe';
 import { PasswordMatchDirective } from './directive/password-match.directive';
 import { ProfileComponent } from './profile/profile.component';
 import { SearchPipe } from './pipes/search.pipe';
+import { FooterComponent } from './footer/footer.component';
 
 registerLocaleData(en);
 
@@ -38,7 +39,8 @@ registerLocaleData(en);
     ReversePipe,
     PasswordMatchDirective,
     ProfileComponent,
-    SearchPipe
+    SearchPipe,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
