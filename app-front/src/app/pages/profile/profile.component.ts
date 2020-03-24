@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { User } from '../model/user';
-import { AuthService } from '../auth.service';
+import { User } from '../../shared/models/user';
+import { AuthService } from '../../shared/services/auth.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { NotesValidatorsService } from '../notes-validators.service';
-import { NoteHttpService } from '../note-http.service';
+import { NotesValidatorsService } from '../../shared/services/notes-validators.service';
+import { NoteHttpService } from '../../shared/services/note-http.service';
 import { Router } from '@angular/router';
 
 @Component({

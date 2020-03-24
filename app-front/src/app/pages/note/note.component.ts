@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../auth.service';
-import { User } from '../model/user';
-import { Note } from '../model/note';
-import { NoteHttpService } from '../note-http.service';
+import { AuthService } from '../../shared/services/auth.service';
+import { User } from '../../shared/models/user';
+import { Note } from '../../shared/models/note';
+import { NoteHttpService } from '../../shared/services/note-http.service';
 
 @Component({
   selector: 'app-note',

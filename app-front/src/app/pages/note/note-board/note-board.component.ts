@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, OnChanges, EventEmitter, Output, SimpleChanges } from '@angular/core';
-import { User } from 'src/app/model/user';
-import { Note } from 'src/app/model/note';
-import { NoteHttpService } from 'src/app/note-http.service';
+import { User } from 'src/app/shared/models/user';
+import { Note } from 'src/app/shared/models/note';
+import { NoteHttpService } from 'src/app/shared/services/note-http.service';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 

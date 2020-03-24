@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { NoteHttpService } from 'src/app/note-http.service';
-import { User } from 'src/app/model/user';
-import { NotesValidatorsService } from 'src/app/notes-validators.service';
-import { MensagemErroSignin } from 'src/app/model/mensagem-erro-signin';
+import { NoteHttpService } from 'src/app/shared/services/note-http.service';
+import { User } from 'src/app/shared/models/user';
+import { NotesValidatorsService } from 'src/app/shared/services/notes-validators.service';
+import { MensagemErroSignin } from 'src/app/shared/models/mensagem-erro-signin';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/auth.service';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-form-signin',

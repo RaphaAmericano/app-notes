@@ -3,7 +3,7 @@ import { AbstractControl, AsyncValidatorFn, FormGroup, ValidatorFn } from '@angu
 import { NoteHttpService } from './note-http.service';
 import { Observable, of } from 'rxjs';
 import { map, distinctUntilChanged, debounceTime, take, switchMap } from 'rxjs/operators';
-import { User } from './model/user';
+import { User } from '../models/user';
 @Injectable({
   providedIn: 'root'
 })

@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges, EventEmitter, Output  } from '@angular/core';
-import { User } from 'src/app/model/user';
-import { Note } from 'src/app/model/note';
+import { User } from 'src/app/shared/models/user';
+import { Note } from 'src/app/shared/models/note';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({

@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { User } from 'src/app/model/user';
-import { NoteHttpService } from 'src/app/note-http.service';
-import { NotesValidatorsService } from 'src/app/notes-validators.service';
+import { User } from 'src/app/shared/models/user';
+import { NoteHttpService } from 'src/app/shared/services/note-http.service';
+import { NotesValidatorsService } from 'src/app/shared/services/notes-validators.service';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/auth.service';
-import { MensagemErro } from 'src/app/model/mensagem-erro';
+import { AuthService } from 'src/app/shared/services/auth.service';
+import { MensagemErro } from 'src/app/shared/models/mensagem-erro';
 
 @Component({
   selector: 'app-form-login',

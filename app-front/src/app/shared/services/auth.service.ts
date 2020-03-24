@@ -1,5 +1,5 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import { User } from './model/user';
+import { User } from '../models/user';
 import { NoteHttpService } from './note-http.service';
 
 @Injectable({
