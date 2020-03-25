@@ -11,26 +11,22 @@ import { NoteHttpService } from '../../shared/services/note-http.service';
 })
 export class NoteComponent implements OnInit {
 
-  public userLogged:User = new User();
+  public userLogged:User;
   public listaNotas:Note[] = new Array<Note>();
   public activeNote:Note;
 
   constructor(
     private authService: AuthService, 
-    private noteHttp:NoteHttpService) { 
-      this.userLogged.id = +localStorage.getItem("id");
-      this.userLogged.nome = localStorage.getItem("nome");
-      this.userLogged.email = localStorage.getItem("email");
-      this.userLogged.senha = localStorage.getItem("senha");
-    }
+    private noteHttp:NoteHttpService) {}
 
   ngOnInit() {
-      this.authService.emitStatus();
+      this.authService.getUserActive().subscribe(
+        user => this.userLogged = user
+      )
       this.updateListNote();
   }
 
   ngOnChanges(){
-    this.authService.emitStatus();
     this.updateListNote();
   }
  

@@ -15,7 +15,7 @@ export class NavbarComponent implements OnInit {
   constructor( private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
-    this.authService.menuEmitter.subscribe(res => this.navMenu = res );
+  
   }
 
   public logoutUser():void {

@@ -1,18 +1,15 @@
-<div class="inner-content" nz-row nzType="flex" nzJustify="center" nzGutter="16">
+<div class="inner-content" 
+    nz-row nzType="flex" 
+    nzJustify="center" 
+    nzGutter="16">
     <app-note-board 
     nz-col 
     nzXs="24"
-    nzMd="12"
-    [user]="userLogged" 
-    [activeNote]="activeNote" 
-    (updateListEmmiter)="updateListNote()"
-    (noteCreatedEmmiter)="changeActiveNote()"></app-note-board>
+    nzMd="12">
+    </app-note-board>
     <app-note-list 
     nz-col 
     nzXs="24"
-    nzMd="12" 
-    [user]="userLogged" 
-    [listaNotas]="listaNotas" 
-    (noteSelectEmmiter)="changeActiveNote($event)"
-    (newNoteEmmiter)="newNote()"></app-note-list>
+    nzMd="12">
+    </app-note-list>
 </div>

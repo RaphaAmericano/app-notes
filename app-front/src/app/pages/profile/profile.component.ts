@@ -28,7 +28,6 @@ export class ProfileComponent implements OnInit {
     private noteHttp:NoteHttpService) {}
 
   ngOnInit() {
-    this.activeUser = this.authService.setUserActive();
     this.profileForm = this.builder.group({
       userName:[this.activeUser.nome],
       userEmail:[this.activeUser.email]

@@ -5,20 +5,14 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { TruncatePipe } from '../shared/pipes/truncate.pipe';
-import { ReversePipe } from '../shared/pipes/reverse.pipe';
-import { PasswordMatchDirective } from '../shared/directive/password-match.directive';
-import { SearchPipe } from '../shared/pipes/search.pipe';
-
+import { NgZorroAntdModule } from 'ng-zorro-antd';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
   declarations: [
     //pipes e directives
-    TruncatePipe,
-    ReversePipe,
-    PasswordMatchDirective,
-    SearchPipe,
+    
     //components
     FooterComponent, 
     NavbarComponent],
@@ -26,15 +20,19 @@ import { SearchPipe } from '../shared/pipes/search.pipe';
     CommonModule,
     BrowserModule,
     HttpClientModule,
+    RouterModule,
     BrowserAnimationsModule,
-    
+    NgZorroAntdModule
     
   ],
   exports:[
     BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    
+    NgZorroAntdModule,
+    RouterModule,
+    //Pipes e directives
+
     //components
     FooterComponent,
     NavbarComponent

@@ -29,7 +29,7 @@
     <!-- button -->
     
     <nz-list [nzItemLayout]="'horizontal'">
-        <nz-list-item *ngFor="let note of listaNotas | reverse  | search: searchForm.get('query').value; let i = index"> 
+        <nz-list-item *ngFor="let note of list_notes | reverse  | search: searchForm.get('query').value; let i = index"> 
             <a (click)="selectNote(note.id)">
                 <nz-list-item-meta
                     [nzTitle]="note.texto | truncate:[85, '...']"

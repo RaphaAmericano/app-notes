@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './pages/login/login.component';
-import { AuthGuardGuard } from './shared/services/auth-guard.guard';
+import { AuthGuard } from './shared/services/auth-guard.guard';
 import { NoteComponent } from './pages/note/note.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 
@@ -14,7 +14,7 @@ const routes: Routes = [
   },
   { 
     path:'board', 
-    loadChildren: () => import('./pages/note/note.module').then(m => m.NoteModule )  
+    loadChildren: () => import('./pages/note/note.module').then(m => m.NoteModule )
   },
   { 
     path:'profile', 

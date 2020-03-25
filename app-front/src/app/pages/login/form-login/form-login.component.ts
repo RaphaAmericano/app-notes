@@ -24,6 +24,10 @@ export class FormLoginComponent implements OnInit {
               private authService:AuthService) { }
 
   ngOnInit() {
+    this.generateForm();
+  }
+
+  private generateForm(): void {
     this.loginForm = this.formBuilder.group({
       userEmail:[null, [Validators.email, Validators.required], [this.noteValidators.emailCheckValidator(false)]],
       userPassword:[null, [Validators.required, Validators.minLength(3)]]
@@ -32,26 +36,21 @@ export class FormLoginComponent implements OnInit {
 
   public submitLogin(): void {
     if(this.loginForm.valid){
+
       let user = new User();
       user.email = this.loginForm.value.userEmail;
       user.senha = this.loginForm.value.userPassword;
 
-      if(!this.loginForm.valid ){ 
-        return;
-      }
       this.service.checkUser(user).subscribe(
         (res) => {
+          console.log(res);
           switch (res.response) {
             case "OK":
-              
+              user.id = parseInt(res.id);
               this.authService.setLoggedStatus(true);
-              this.authService.getUserLogged(user.email);
+              this.authService.setUserActive(user);
               this.resetLogin();          
-              setTimeout(
-                ()=>{
-                  this.routerBuider.navigate(['board']);     
-                }, 1000
-              )
+              this.routerBuider.navigate(['board']);
               break;
             case "Email Inexistente":
               this.mensagemErro.email = res.response;
