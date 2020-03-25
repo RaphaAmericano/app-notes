@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, EventEmitter, Output, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, EventEmitter, Output, SimpleChanges, AfterViewChecked } from '@angular/core';
 import { User } from 'src/app/shared/models/user';
 import { Note } from 'src/app/shared/models/note';
 import { NoteHttpService } from 'src/app/shared/services/note-http.service';
@@ -17,28 +17,34 @@ export class NoteBoardComponent implements OnInit {
   public popOverDeleteVisibility:boolean;
 
   public user: User;
-  public activeNote:Note;
+  public activeNote:Note = new Note();
   public formTextContent:FormGroup;
 
   constructor(
     private authService:AuthService,
     private noteHttp:NoteHttpService, 
     private noteService: NotesService,
-    private formBuilder:FormBuilder) { }
+    private formBuilder:FormBuilder) { 
+      this.formTextContent = this.formBuilder.group({
+        texto:[null, [Validators.required, Validators.minLength(10)]]   
+      });
+    }
 
   ngOnInit() {
-    this.formTextContent = this.formBuilder.group({
-      texto:[null, [Validators.required, Validators.minLength(10)]]   
-    });
+    
 
     this.authService.getUserActive().subscribe(
       user => this.user = user
-    )
-
-    this.noteService.getActiveNote().subscribe(
-      note => this.activeNote = note
     );
 
+    this.noteService.getActiveNote().subscribe(
+      note =>  { 
+        this.activeNote = note;
+        if(note) {
+          this.formTextContent.get('texto').setValue(note.texto)
+        }
+      }
+    );
   }
 
   public addNewNote(): void {
