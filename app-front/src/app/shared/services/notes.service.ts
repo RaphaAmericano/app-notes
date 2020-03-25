@@ -28,7 +28,8 @@ export class NotesService {
   }
 
   public changeActiveNote(index:number): void {
-    this.active_note.next(this.list_notes[index]);
+    let note = this.list_notes.filter( note => note.id === index )[0];
+    this.active_note.next(note);
   }
 
   public getListNotes():Observable<Array<Note>> {
