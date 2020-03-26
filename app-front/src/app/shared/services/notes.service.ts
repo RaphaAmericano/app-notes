@@ -9,11 +9,12 @@ import { Observable, BehaviorSubject } from 'rxjs';
 })
 export class NotesService {
 
-  private active_note:BehaviorSubject<Note> = new BehaviorSubject<Note>(new Note());
+  private active_note:BehaviorSubject<Note> = new BehaviorSubject<Note>(null);
   private list_notes_behavior:BehaviorSubject<Array<Note>> = new BehaviorSubject<Array<Note>>(null);
   public list_notes:Note[];
 
-  constructor(private auth:AuthService, 
+  constructor(
+    private auth:AuthService, 
     private noteHttp:NoteHttpService) { }
 
   public loadNotes(){

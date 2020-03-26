@@ -26,7 +26,6 @@ export class NoteListComponent implements OnInit  {
     this.noteService.getListNotes().subscribe(
       notes => this.list_notes = notes 
     )
-
   }
 
   public selectNote(value:number): void{

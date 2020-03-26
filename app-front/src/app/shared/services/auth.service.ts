@@ -32,7 +32,8 @@ export class AuthService {
   public getUserLogged(email: string ): void {
     this.http.getUserByEmail(email).subscribe(
       (user) => {
-        this.userSubject.next(user)
+        this.userSubject.next(user);
+        this.loggedSubject.next(true)
       },
       (err) => console.log(err)
     )
@@ -49,6 +50,11 @@ export class AuthService {
 
   public getUserActive(): Observable<User> {
     return this.userSubject.asObservable();
+  }
+
+  public logoutAuth(): void {
+    this.clearUserLocalStorage();
+    this.setLoggedStatus(false);
   }
 
 }
