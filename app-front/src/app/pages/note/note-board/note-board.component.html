@@ -1,6 +1,7 @@
 <div nz-row>
     <div nz-col nzSpan="24">
         <nz-page-header nzTitle="{{ user.nome }}" nzSubtitle="{{ user.email }}"> 
+                {{ isblankNote | json }}
                 <nz-page-header-extra *ngIf="activeNote">
                     <button 
                     nz-button 
@@ -43,8 +44,10 @@
                 </nz-form-control>
             </nz-form-item >
             <nz-form-item>
-                <button nz-button [disabled]="activeNote != null" (click)="addNewNote()">Nova nota</button>
-                <button nz-button nzType="primary" [disabled]="activeNote == null" (click)="saveNote()"><i nz-icon nzType="save"></i>Salvar</button>
+                <button nz-button nzType="primary" [disabled]='!formTextContent.valid' (click)="saveNote()"><i nz-icon nzType="save"></i>Salvar</button>
+            </nz-form-item>
+            <nz-form-item>
+                <button nz-button nzType="default" (click)="newNote()"><i nz-icon nzType="form"></i>Novo</button>
             </nz-form-item>
         </form>
     </div>

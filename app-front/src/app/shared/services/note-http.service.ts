@@ -41,6 +41,10 @@ export class NoteHttpService {
     return this.http.get<Note[]>(`/api/notes/user/${id}`);
   }
 
+  public getNoteById(id:number): Observable<Note> {
+    return this.http.get<Note>(`/api/notes/${id}`)
+  } 
+
   public postNewNote(note:Note) : Observable<boolean> {
     return this.http.post<boolean>(`/api/notes`, note, httpOptions);
   }

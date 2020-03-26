@@ -5,4 +5,8 @@ export class Note {
     data_criacao:Date;
     data_edicao:Date;
     constructor(){}
+
+    public get getEdicaoTime():number {
+        return this.data_edicao.getTime();
+    }
 }

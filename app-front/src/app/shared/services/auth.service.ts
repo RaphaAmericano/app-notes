@@ -14,7 +14,6 @@ export class AuthService {
 
   constructor(private http:NoteHttpService) { 
     this.userSubject = new BehaviorSubject<User>(this.getUserStorage());
-    console.log(this.userSubject.value);
   }
 
   public setLoggedStatus(value:boolean ) {
@@ -33,7 +32,6 @@ export class AuthService {
   public getUserLogged(email: string ): void {
     this.http.getUserByEmail(email).subscribe(
       (user) => {
-        console.log(user);
         this.userSubject.next(user)
       },
       (err) => console.log(err)

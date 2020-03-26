@@ -24,14 +24,12 @@ export class NoteBoardComponent implements OnInit {
     private authService:AuthService,
     private noteHttp:NoteHttpService, 
     private noteService: NotesService,
-    private formBuilder:FormBuilder) { 
-      this.formTextContent = this.formBuilder.group({
-        texto:[null, [Validators.required, Validators.minLength(10)]]   
-      });
-    }
+    private formBuilder:FormBuilder) {}
 
   ngOnInit() {
-    
+    this.formTextContent = this.formBuilder.group({
+      texto:[null, [Validators.required, Validators.minLength(10)]]   
+    });
 
     this.authService.getUserActive().subscribe(
       user => this.user = user
@@ -47,22 +45,6 @@ export class NoteBoardComponent implements OnInit {
     );
   }
 
-  public addNewNote(): void {
-    const newNote = new Note();
-    newNote.texto = this.formTextContent.get("texto").value;
-    newNote.id_user = parseInt(localStorage.getItem("id")); 
-    // this.noteHttp.postNewNote(newNote).subscribe(
-    //     (res) => { 
-    //       this.updateListEmmiter.emit(); 
-    //     },
-    //     (error) => { console.log(error)
-    //     },
-    //     () => {
-    //       this.noteCreatedEmmiter.emit();
-    //     }
-    //   )
-  }
-
   public autoSaveNote(): void {
     setInterval(
       () => {
@@ -75,30 +57,67 @@ export class NoteBoardComponent implements OnInit {
   }
 
   public saveNote(): void{
-    let note = new Note();
-    note.id = this.activeNote.id;
-    note.texto = this.formTextContent.get('texto').value;
-    // if(note.texto != null ){
-    //   this.noteHttp.updateUserNote(note).subscribe(
-    //     (res)=> { 
-    //       this.updateListEmmiter.emit();
-    //     },
-    //     (error) =>{
-    //       console.log(error);
-    //     }
-    //   )
-    // }
+    if( this.activeNote == null || ("undefined" === typeof(this.activeNote['id']))){
+      this.saveNewNote();       
+    } 
+    else {
+      this.updateNote();
+    }
   }
 
-  public deleteNote(): void{
-    this.popOverDeleteVisibility = false;
-    this.noteHttp.deleteUserNote(this.activeNote).toPromise().then(
+
+  private saveNewNote(){
+    this.activeNote.id_user = this.user.id;
+    this.activeNote.texto = this.formTextContent.get('texto').value.trim();
+    this.noteHttp.postNewNote(this.activeNote).subscribe(
       (res) => {
-        // this.updateListEmmiter.emit();
-        this.formTextContent.reset();
-        this.activeNote = null;
+        this.reloadList()
+      },
+      (err) => {
+        console.log(err)
       }
-    );
+    )
+  }
+
+  private updateNote(){
+    if(this.activeNote.texto !== this.formTextContent.get('texto').value){
+      this.activeNote.texto = this.formTextContent.get('texto').value
+      this.noteHttp.updateUserNote(this.activeNote).subscribe(
+        (res) => {
+          this.reloadList();
+        },
+        (err) => { console.log(err)}
+      )
+    } 
+    else {
+      console.log('texto igual');
+    }
+  }
+
+  private reloadList(): void {
+    this.noteService.loadNotes();
+    this.noteService.activeFirstIndexNote();
+  }
+
+  public newNote(): void {
+    this.formTextContent.reset();
+    this.noteService.clearActiveNote();
+  }
+
+  public deleteNote(): void {
+    this.noteHttp.deleteUserNote(this.activeNote).subscribe(
+      () => {
+        this.popOverDeleteVisibility = false;
+        this.formTextContent.reset();
+        this.noteService.loadNotes();
+        this.noteService.clearActiveNote();
+      },
+      (err) => console.log(err)
+    )
+  }
+
+  public isblankNote(): boolean {
+    return ("undefined" === typeof(this.activeNote['id'])) ? false : true 
   }
 
 }

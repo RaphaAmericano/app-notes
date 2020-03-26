@@ -24,21 +24,13 @@ export class NoteListComponent implements OnInit  {
       query:[null]
     })
     this.noteService.getListNotes().subscribe(
-      notes => { 
-        this.list_notes = notes;
-        console.log(notes);
-      }
+      notes => this.list_notes = notes 
     )
 
   }
 
   public selectNote(value:number): void{
-    console.log(value);
     this.noteService.changeActiveNote(value);
-  }
-
-  public addNewNoteField(): void {
-    // this.newNoteEmmiter.emit();
   }
 
 }
