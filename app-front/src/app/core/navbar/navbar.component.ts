@@ -15,10 +15,11 @@ export class NavbarComponent implements OnInit {
   constructor( private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
-    this.authService.getLoggedStatus().subscribe(
-      (res:boolean) => {
-        this.navMenu = res }
-    )
+    //this.authService.getUserLogged();
+    // this.authService.getLoggedStatus().subscribe(
+    //   (res:boolean) => {
+    //     this.navMenu = res }
+    // )
   }
 
   

@@ -19,10 +19,10 @@ export class NoteComponent implements OnInit {
     private noteService:NotesService) {}
 
   ngOnInit() {
-      this.authService.getUserActive().subscribe(
-        user => this.userLogged = user
-      )
-      this.noteService.loadNotes();
+      // this.authService.getUserActive().subscribe(
+      //   user => this.userLogged = user
+      // )
+      //this.noteService.loadNotes();
       
   }
 

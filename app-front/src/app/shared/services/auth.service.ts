@@ -14,6 +14,12 @@ export class AuthService {
 
   constructor(private http:NoteHttpService) { 
     this.userSubject = new BehaviorSubject<User>(this.getUserStorage());
+    console.log(this.userSubject.value.id);
+    if(this.userSubject.value.id > 0  ){
+      console.log('constructor');
+      this.loggedSubject.next(true);
+      console.log('status', this.loggedSubject.value);
+    }
   }
 
   public setLoggedStatus(value:boolean ) {
@@ -25,13 +31,10 @@ export class AuthService {
     this.userSubject.next(user);
   }
 
-  public getLoggedStatus(): Observable<boolean> {
-    return this.loggedSubject.asObservable();
-  }
-
   public getUserLogged(email: string ): void {
     this.http.getUserByEmail(email).subscribe(
       (user) => {
+        console.log(user);
         this.userSubject.next(user);
         this.loggedSubject.next(true)
       },
@@ -50,6 +53,14 @@ export class AuthService {
 
   public getUserActive(): Observable<User> {
     return this.userSubject.asObservable();
+  }
+
+  public getLoggedStatus(): Observable<boolean> {
+    return this.loggedSubject.asObservable();
+  }
+
+  public getStatusValue(): boolean {
+    return this.loggedSubject.value;
   }
 
   public logoutAuth(): void {

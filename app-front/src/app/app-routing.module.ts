@@ -14,17 +14,24 @@ const routes: Routes = [
   },
   { 
     path:'board', 
-    loadChildren: () => import('./pages/note/note.module').then(m => m.NoteModule )
+    loadChildren: () => import('./pages/note/note.module').then(m => m.NoteModule ),
+    canActivate:[AuthGuard]
   },
   { 
     path:'profile', 
-    loadChildren: () => import('./pages/profile/profile.module').then(m => m.ProfileModule)
+    loadChildren: () => import('./pages/profile/profile.module').then(m => m.ProfileModule),
+    canActivate:[AuthGuard]
   },
   { 
     path:'', 
     redirectTo:'login', 
     pathMatch: 'full'
+  },
+  {
+    path: '**',
+    redirectTo:''
   }
+
 ];
 
 @NgModule({
