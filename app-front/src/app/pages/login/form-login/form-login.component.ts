@@ -43,10 +43,10 @@ export class FormLoginComponent implements OnInit {
 
       this.service.checkUser(user).subscribe(
         (res) => {
-          console.log(res);
           switch (res.response) {
             case "OK":
               user.id = parseInt(res.id);
+              user.nome = res.nome;
               this.authService.setLoggedStatus(true);
               this.authService.setUserActive(user);
               this.resetLogin();          

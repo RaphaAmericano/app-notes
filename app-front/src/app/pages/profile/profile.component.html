@@ -6,7 +6,8 @@
         <div nz-col nzSpan="24">
             <form
             *ngIf="!updateSuccess" 
-            nz-form [formGroup]="profileForm" (ngSubmit)="submitUpdate()">
+            nz-form [formGroup]="profileForm" 
+            (ngSubmit)="submitUpdate()">
             <nz-form-item>
                 <nz-form-control>
                     <nz-input-group nzPrefixIcon="user">

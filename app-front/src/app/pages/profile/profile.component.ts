@@ -30,9 +30,10 @@ export class ProfileComponent implements OnInit {
   ngOnInit() {
 
     this.authService.getUserActive().subscribe(
-      user => this.activeUser = user
+      user => {
+        this.activeUser = user
+      }
     )
-
 
     this.profileForm = this.builder.group({
       userName:[this.activeUser.nome],
@@ -50,29 +51,32 @@ export class ProfileComponent implements OnInit {
 
 
   public submitUpdate():void {
-    const user:User = new User();
-    user.id = this.activeUser.id;
+    const user:User = this.activeUser;
     user.nome = this.profileForm.get('userName').value;
     user.email = this.profileForm.get('userEmail').value;
     this.noteHttp.updateUser(user).subscribe(
       (res) => {
-        this.updateSuccess = true;
+        if(res){
+          this.updateSuccess = true;
+          this.authService.setUserActive(user);
+        }
+        //Escrever um else para mensagens
       },
       (error) => console.log(error)
     )
-    this.authService.getUserLogged(user.email);
-    
+  
   }
 
   public submitNewPassword(): void{
-    const user:User = new User();
-    user.id = this.activeUser.id;
+    const user:User = this.activeUser;
     user.senha = this.userPassword.get('password').value;
     this.noteHttp.updateUserPassword(user).subscribe(
       (res) => {
-        this.passworUpdateSuccess = true;
-        this.authService.getUserLogged(this.activeUser.email);
-        this.userPassword.reset();
+        if(res){
+          this.passworUpdateSuccess = true;
+          this.authService.setUserActive(user);
+          this.userPassword.reset();
+        }
       },
       (error) => {
         console.log(error);
@@ -87,15 +91,18 @@ export class ProfileComponent implements OnInit {
   public deleteUser(): void {
     this.noteHttp.deleteUser(this.activeUser).subscribe(
       (res) => { 
-        this.authService.setLoggedStatus(false);
-        this.deleteForm.reset();
-        this.deleteUserSuccess = true;
-        setTimeout(()=>{
-          this.router.navigate(['login']);
-        }, 4000)
+        if(res){
+          this.deleteForm.reset();
+          this.deleteUserSuccess = true;
+          this.authService.logoutAuth().subscribe(
+            () => this.router.navigateByUrl('login')
+          );
+        }
       },
       (error) => console.log(error)
     )
   }
+
+
 
 }

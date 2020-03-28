@@ -65,9 +65,7 @@ export class NoteHttpService {
     return this.http.put<boolean>(`/api/users/update/password`, user, httpOptions);
   }
 
-  public checkUserPassword(password:string, id:number) : Observable<boolean> {
-    let user = new User();
-    user.id = id;
+  public checkUserPassword(password:string, user:User) : Observable<boolean> {
     user.senha = password;
     return this.http.post<boolean>(`/api/users/check/password`, user, httpOptions);
   }

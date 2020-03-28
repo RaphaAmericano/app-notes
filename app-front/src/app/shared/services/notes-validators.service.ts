@@ -4,12 +4,13 @@ import { NoteHttpService } from './note-http.service';
 import { Observable, of } from 'rxjs';
 import { map, distinctUntilChanged, debounceTime, take, switchMap } from 'rxjs/operators';
 import { User } from '../models/user';
+import { AuthService } from './auth.service';
 @Injectable({
   providedIn: 'root'
 })
 export class NotesValidatorsService {
 
-  constructor(private httpNote: NoteHttpService) { }
+  constructor(private httpNote: NoteHttpService, private auth: AuthService) { }
 
   public emailCheckValidator(exists:boolean) : AsyncValidatorFn {
     
@@ -35,7 +36,7 @@ export class NotesValidatorsService {
         debounceTime(500),
         take(1),
         switchMap( () => 
-         this.httpNote.checkUserPassword(control.value, +localStorage.getItem("id")).pipe(
+         this.httpNote.checkUserPassword(control.value, this.auth.getUserValue()).pipe(
           map( res => {
             if(res == false ){
               return { checkPassword: res}

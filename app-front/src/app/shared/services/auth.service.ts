@@ -2,23 +2,20 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { User } from '../models/user';
 import { NoteHttpService } from './note-http.service';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-
   private userSubject:BehaviorSubject<User>; 
   private loggedSubject:BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-  constructor(private http:NoteHttpService) { 
+  constructor(private http:NoteHttpService, private router:Router) { 
     this.userSubject = new BehaviorSubject<User>(this.getUserStorage());
-    console.log(this.userSubject.value.id);
-    if(this.userSubject.value.id > 0  ){
-      console.log('constructor');
+    if(this.userSubject.value.id > 0 ){
       this.loggedSubject.next(true);
-      console.log('status', this.loggedSubject.value);
     }
   }
 
@@ -34,7 +31,6 @@ export class AuthService {
   public getUserLogged(email: string ): void {
     this.http.getUserByEmail(email).subscribe(
       (user) => {
-        console.log(user);
         this.userSubject.next(user);
         this.loggedSubject.next(true)
       },
@@ -63,9 +59,19 @@ export class AuthService {
     return this.loggedSubject.value;
   }
 
-  public logoutAuth(): void {
-    this.clearUserLocalStorage();
-    this.setLoggedStatus(false);
+  public getUserValue(): User {
+    return this.userSubject.value;
+  }
+
+  public logoutAuth(): Observable<void> {
+    return new Observable(
+      (observer) => {
+        this.clearUserLocalStorage();
+        this.setLoggedStatus(false);
+        
+        observer.complete();
+      } 
+    )
   }
 
 }

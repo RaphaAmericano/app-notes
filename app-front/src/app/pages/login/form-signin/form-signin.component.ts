@@ -46,7 +46,6 @@ export class FormSigninComponent implements OnInit {
     user.senha = this.signinForm.value.userPassword.password;
     this.http.postNewUser(user).subscribe(
       (data)=>{
-        console.log(data);
         if(data){
           this.resetForm();
           this.signinSucess = true;
