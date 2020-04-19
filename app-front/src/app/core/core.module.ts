@@ -7,8 +7,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { RouterModule } from '@angular/router';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { EffectsModule } from '@ngrx/effects';
 
-
+import { environment } from '../../environments/environment' ;
 @NgModule({
   declarations: [
     //pipes e directives
@@ -22,8 +25,14 @@ import { RouterModule } from '@angular/router';
     HttpClientModule,
     RouterModule,
     BrowserAnimationsModule,
-    NgZorroAntdModule
-    
+    NgZorroAntdModule,
+    StoreModule.forRoot({}),
+    StoreDevtoolsModule.instrument({
+      name: 'Note app devtool',
+      maxAge: 25,
+      logOnly: environment.production
+    }),
+    EffectsModule.forRoot([])
   ],
   exports:[
     BrowserModule,

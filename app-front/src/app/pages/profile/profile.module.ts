@@ -2,6 +2,10 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ProfileRoutingModule } from './profile-router.module';
 import { ProfileComponent } from './profile.component';
+import { StoreModule } from '@ngrx/store';
+import { reducer } from './state/user.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { UserEffects } from './state/user.effects';
 
 
 
@@ -9,7 +13,9 @@ import { ProfileComponent } from './profile.component';
   declarations: [ProfileComponent],
   imports: [
     SharedModule,
-    ProfileRoutingModule
+    ProfileRoutingModule,
+    StoreModule.forFeature('user', reducer),
+    EffectsModule.forFeature([UserEffects])
   ],
   exports:[
     ProfileComponent
