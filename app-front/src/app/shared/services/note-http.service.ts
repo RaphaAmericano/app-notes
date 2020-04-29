@@ -15,8 +15,8 @@ export class NoteHttpService {
 
   constructor( private http:HttpClient ) { }
   
-  public postNewUser(user: User): Observable<any> {    
-    return this.http.post<User>(`/api/users/`, user).pipe(
+  public postNewUser(user: User): Observable<boolean> {    
+    return this.http.post<boolean>(`/api/users/`, user).pipe(
       catchError(this.handleError)
     );
   }

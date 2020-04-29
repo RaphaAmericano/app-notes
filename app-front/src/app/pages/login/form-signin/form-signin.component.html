@@ -64,6 +64,6 @@
                 [nzType]="'primary'">Sign In</button>
             </nz-form-control>
         </nz-form-item>
-        <nz-alert *ngIf="signinSucess !== undefined && signinSucess" nzType="success" nzMessage="Usuário cadastrado com sucesso"></nz-alert>
+        <nz-alert *ngIf="signinSucess !== undefined && signinSucess" nzType="success" nzMessage="Usuário cadastrado com sucesso! Você será redirecionado em: {{ counter | miliseconds }}"></nz-alert>
         <nz-alert *ngIf="signinSucess !== undefined && !signinSucess" nzType="error" nzMessage="Erro no cadastro"></nz-alert>
     </form>

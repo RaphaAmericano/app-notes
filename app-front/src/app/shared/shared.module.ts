@@ -7,6 +7,7 @@ import { TruncatePipe } from './pipes/truncate.pipe';
 import { ReversePipe } from './pipes/reverse.pipe';
 import { PasswordMatchDirective } from './directive/password-match.directive';
 import { SearchPipe } from './pipes/search.pipe';
+import { MilisecondsPipe } from './pipes/miliseconds.pipe';
 
 
 
@@ -14,8 +15,10 @@ import { SearchPipe } from './pipes/search.pipe';
   declarations: [
     TruncatePipe,
     ReversePipe,
+    MilisecondsPipe,
     PasswordMatchDirective,
-    SearchPipe
+    SearchPipe,
+    MilisecondsPipe
   ],
   imports: [
     CommonModule,
@@ -32,6 +35,7 @@ import { SearchPipe } from './pipes/search.pipe';
     //pipes
     TruncatePipe,
     ReversePipe,
+    MilisecondsPipe,
     PasswordMatchDirective,
     SearchPipe
   ]

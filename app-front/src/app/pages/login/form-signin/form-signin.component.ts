@@ -6,6 +6,8 @@ import { NotesValidatorsService } from 'src/app/shared/services/notes-validators
 import { MensagemErroSignin } from 'src/app/shared/models/mensagem-erro-signin';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { tap, concatMap, debounceTime, delay } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-form-signin',
@@ -21,6 +23,8 @@ export class FormSigninComponent implements OnInit {
                                               "Insira seu nome", 
                                               "Repita sua senha");
   public signinSucess:boolean = undefined;
+  public counter:number = 3000;
+
   constructor(private formBuilder:FormBuilder, 
               private http:NoteHttpService, 
               private router:Router,
@@ -44,21 +48,35 @@ export class FormSigninComponent implements OnInit {
     user.nome = this.signinForm.value.userName;
     user.email = this.signinForm.value.userEmail;
     user.senha = this.signinForm.value.userPassword.password;
-    this.http.postNewUser(user).subscribe(
-      (data)=>{
-        if(data){
-          this.resetForm();
+    this.http.postNewUser(user).pipe(
+      tap((flag) => console.log(flag)),
+      concatMap((flag) => {
+        if(flag){
+          this.authService.setUserActive(user);
           this.signinSucess = true;
+          this.resetForm();
+          this.timer();
         } else {
           this.signinSucess = false;
         }
-      },(error) => {
-        console.log(error);
-      }
-    );
+        return of(flag);
+      }),
+      delay(3000)
+    ).subscribe((flag) => {
+      if(flag){
+          this.router.navigate(['board']);
+        }
+    });
   }
-  public resetForm(): void {
+
+  private resetForm(): void {
     this.signinForm.reset();
+  }
+
+  private timer(): void {
+      setInterval(()=>{
+          this.counter  = this.counter - 1000;
+      }, 1000)
   }
 
   public showForm(): void {

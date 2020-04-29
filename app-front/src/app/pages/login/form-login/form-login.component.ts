@@ -58,7 +58,6 @@ export class FormLoginComponent implements OnInit {
         })),
         concatMap((flag) => {
           if(flag){
-            console.log('buscar o user');
             return this.service.getUserByEmail(user.email);
           } else {
             this.mensagemErro.password = "Senha incorreta";
@@ -69,6 +68,7 @@ export class FormLoginComponent implements OnInit {
         }),
         concatMap((user:User)=> {
             this.authService.setUserActive(user);
+            //TODO: adicionar ao state
             return of(true);
         })
       ).subscribe((flag) => {
