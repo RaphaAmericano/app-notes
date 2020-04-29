@@ -5,7 +5,7 @@ import { FormSigninComponent } from './form-signin/form-signin.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { LoginRoutingModule } from './login-router.module';
 import { StoreModule } from '@ngrx/store';
-import { reducer } from '../profile/state/user.reducer';
+import { reducer } from './state/login.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { UserEffects } from '../profile/state/user.effects';
 
@@ -16,8 +16,8 @@ import { UserEffects } from '../profile/state/user.effects';
   imports: [
     SharedModule,
     LoginRoutingModule,
-    StoreModule.forFeature('user', reducer),
-    EffectsModule.forFeature([UserEffects])
+    StoreModule.forFeature('login', reducer),
+    // EffectsModule.forFeature([UserEffects])
   ],
   exports:[
     LoginComponent,

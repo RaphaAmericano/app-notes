@@ -6,11 +6,12 @@ import { NotesValidatorsService } from 'src/app/shared/services/notes-validators
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { MensagemErro } from 'src/app/shared/models/mensagem-erro';
-import * as fromUser from './../../profile/state/user.state';
-import * as userActions from './../../profile/state/user.actions';
-import { Store } from '@ngrx/store';
-import { map, takeWhile, tap, first, concatMap  } from 'rxjs/operators';
+import { concatMap, distinctUntilChanged, switchMap, tap, debounceTime  } from 'rxjs/operators';
 import { of, combineLatest } from 'rxjs';
+import * as fromLogin from '../state'; //index.ts
+import * as loginActions from '../state/login.actions';
+import * as fromRoot from '../../../state/app.state';
+import { Store, select } from '@ngrx/store';
 @Component({
   selector: 'app-form-login',
   templateUrl: './form-login.component.html',
@@ -21,7 +22,7 @@ export class FormLoginComponent implements OnInit {
   public loginForm:FormGroup;
   public mensagemErro:MensagemErro = new MensagemErro("Insira seu email", "Insira sua senha");
   constructor(
-    // private store:Store<fromUser.State>,
+        private store:Store<fromRoot.State>,
               private formBuilder:FormBuilder, 
               private service:NoteHttpService, 
               private noteValidators:NotesValidatorsService, 
@@ -30,9 +31,29 @@ export class FormLoginComponent implements OnInit {
 
   ngOnInit() {
     this.generateForm();
+    combineLatest([
+      this.store.pipe(select(fromLogin.getLoginEmail))  
+    ]).pipe(
+      tap(email => console.log(email)),
+      concatMap(([email]) => {
+        this.loginForm.get('userEmail').setValue(email);
+        return of(email);
+      })
+    ).subscribe(console.log);
+    
+    this.loginForm.get('userEmail').valueChanges.pipe(
+      debounceTime(500),
+      distinctUntilChanged(),
+      switchMap((val) => { 
+          this.store.dispatch(new loginActions.LoginEmail(val));
+          return of(true);
+        }
+      )
+    ).subscribe(console.log);
   }
 
   private generateForm(): void {
+
     this.loginForm = this.formBuilder.group({
       userEmail:[null, [Validators.email, Validators.required], [this.noteValidators.emailCheckValidator(false)]],
       userPassword:[null, [Validators.required, Validators.minLength(3)]]

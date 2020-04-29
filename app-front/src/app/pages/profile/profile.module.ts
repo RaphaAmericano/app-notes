@@ -14,8 +14,8 @@ import { UserEffects } from './state/user.effects';
   imports: [
     SharedModule,
     ProfileRoutingModule,
-    StoreModule.forFeature('user', reducer),
-    EffectsModule.forFeature([UserEffects])
+    // StoreModule.forFeature('user', reducer),
+    // EffectsModule.forFeature([UserEffects])
   ],
   exports:[
     ProfileComponent
