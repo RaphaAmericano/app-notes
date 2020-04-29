@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FooterComponent } from './footer/footer.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { RouterModule } from '@angular/router';
@@ -12,6 +12,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 
 import { environment } from '../../environments/environment' ;
+import { BasicHeaderInterceptor } from './interceptors/basic-header.interceptor';
 @NgModule({
   declarations: [
     //pipes e directives
@@ -45,6 +46,9 @@ import { environment } from '../../environments/environment' ;
     //components
     FooterComponent,
     NavbarComponent
+  ],
+  providers:[
+      {provide: HTTP_INTERCEPTORS, useClass: BasicHeaderInterceptor, multi: true}
   ]
 })
 export class CoreModule { }

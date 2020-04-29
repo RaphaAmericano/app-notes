@@ -36,7 +36,7 @@ export class NotesValidatorsService {
         debounceTime(500),
         take(1),
         switchMap( () => 
-         this.httpNote.checkUserPassword(control.value, this.auth.getUserValue()).pipe(
+         this.httpNote.checkUserPassword(control.value, this.auth.getUserValue().email).pipe(
           map( res => {
             if(res == false ){
               return { checkPassword: res}

@@ -30,5 +30,5 @@
             <button [disabled]="!loginForm.valid" nz-button [nzType]="'primary'">Login</button>
         </nz-form-control>
     </nz-form-item>
-
+    <nz-alert *ngIf="mensagemErro.unknown !== ''" nzType="danger" nzMessage="{{ mensagemErro.unknown}}"></nz-alert>
 </form>

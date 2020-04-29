@@ -1,30 +1,25 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { LoginComponent } from './pages/login/login.component';
-import { AuthGuard } from './shared/services/auth-guard.guard';
-import { NoteComponent } from './pages/note/note.component';
-import { ProfileComponent } from './pages/profile/profile.component';
-
 
 const routes: Routes = [
   
   { 
-    path:'login', 
+    path:'welcome', 
     loadChildren: () => import('./pages/login/login.module').then(m => m.LoginModule)
   },
   { 
     path:'board', 
     loadChildren: () => import('./pages/note/note.module').then(m => m.NoteModule ),
-    canActivate:[AuthGuard]
+    // canActivate:[AuthGuard]
   },
   { 
     path:'profile', 
     loadChildren: () => import('./pages/profile/profile.module').then(m => m.ProfileModule),
-    canActivate:[AuthGuard]
+    // canActivate:[AuthGuard]
   },
   { 
     path:'', 
-    redirectTo:'login', 
+    redirectTo:'welcome', 
     pathMatch: 'full'
   },
   {

@@ -24,8 +24,8 @@ export class AuthService {
   }
 
   public setUserActive(user:User) {
-    localStorage.setItem('loggedin', JSON.stringify(user));
-    this.userSubject.next(user);
+    delete user.senha;
+    localStorage.setItem('user', JSON.stringify(user));
   }
 
   public getUserLogged(email: string ): void {

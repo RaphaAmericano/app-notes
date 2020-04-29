@@ -1,14 +1,14 @@
 <div nz-row nzType="flex" nzJustify="center">
     <section nz-col class="login-component">
-        <nz-tabset>
-            <nz-tab nzTitle="Login">
-                <!-- <i nz-icon nzType="user"></i> -->
-                <app-form-login></app-form-login>
+        <nz-tabset nzLinkRouter>
+            <nz-tab>
+                <a nz-tab-link [routerLink]="['login']">Login</a>
             </nz-tab>
-            <nz-tab nzTitle="Sign in">
-                <!-- <i nz-icon nzType="user-add"></i> -->
-                <app-form-signin></app-form-signin>    
+            <nz-tab>
+                <a nz-tab-link [routerLink]="['signin']">Signin</a>
             </nz-tab>
         </nz-tabset>
+        <router-outlet></router-outlet>
+        
     </section>
 </div>
