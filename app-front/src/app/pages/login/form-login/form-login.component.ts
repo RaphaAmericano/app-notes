@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { MensagemErro } from 'src/app/shared/models/mensagem-erro';
 import { concatMap, distinctUntilChanged, switchMap, tap, debounceTime, map  } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { of, combineLatest } from 'rxjs';
 import * as fromLogin from '../state'; //index.ts
 import * as loginActions from '../state/login.actions';
 import * as fromRoot from '../../../state/app.state';
@@ -31,22 +31,42 @@ export class FormLoginComponent implements OnInit {
 
   ngOnInit() {
     this.generateForm();
-    this.store.pipe(
-      select(fromLogin.getLoginEmail),
-      concatMap((email) => {
+    combineLatest([
+      this.store.pipe(select(fromLogin.getLoginEmail)),
+      this.store.pipe(select(fromLogin.getLoginPassword))
+    ]).pipe(
+      tap(([email, password]) => {
         this.loginForm.get('userEmail').setValue(email);
-        return of(email);
+        this.loginForm.get('userPassword').setValue(password);
+      })
+    ).subscribe()
+
+    // this.store.pipe(
+    //   select(fromLogin.getLoginEmail),
+    //   concatMap((email) => {
+    //     this.loginForm.get('userEmail').setValue(email);
+    //     return of(email);
+    //   })
+    // ).subscribe();
+
+    // this.store.pipe(
+    //   select(fromLogin.getLoginPassword),
+    //   concatMap((password) => {
+    //     this.loginForm.get('userPassword').setValue(password);
+    //     return of(password);
+    //   })
+    // ).subscribe();
+    ////
+
+    this.loginForm.valueChanges.pipe(
+      debounceTime(500),
+      distinctUntilChanged(),
+      tap((form) => {
+        this.store.dispatch(new loginActions.LoginEmail(form.userEmail));
+        this.store.dispatch(new loginActions.LoginPassword(form.userPassword));
       })
     ).subscribe();
 
-    this.store.pipe(
-      select(fromLogin.getLoginPassword),
-      concatMap((password) => {
-        this.loginForm.get('userPassword').setValue(password);
-        return of(password);
-      })
-    ).subscribe();
-    ////
     this.loginForm.get('userEmail').valueChanges.pipe(
       debounceTime(500),
       distinctUntilChanged(),

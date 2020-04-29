@@ -45,8 +45,6 @@ export class FormSigninComponent implements OnInit {
       this.store.pipe(select(fromLogin.getSigninPassword)),
       this.store.pipe(select(fromLogin.getSigninPasswordRepeat))
     ]).pipe(
-      // debounceTime(1000),
-      // distinctUntilChanged(),
       tap(([name, email, password, repeat]) => {
         this.signinForm.get('userName').setValue(name);
         this.signinForm.get('userEmail').setValue(email);
@@ -54,15 +52,8 @@ export class FormSigninComponent implements OnInit {
         this.signinForm.get('userPassword').get('repeat').setValue(repeat);
       }),
       tap( password => console.log(password)),
-    ).subscribe(console.log);
-    // forkJoin([
-    //   this.store.pipe(select(fromLogin.getSigninPassword)),
-    //   this.store.pipe(select(fromLogin.getSigninPasswordRepeat))
-    // ]).pipe(
-    //   tap(([password, repeat]) => console.log(password, repeat))
-    // )
-
-    //apenas para debug  
+    ).subscribe();
+  
     this.signinForm.valueChanges.pipe(
       debounceTime(500),
       distinctUntilChanged(),
@@ -71,10 +62,8 @@ export class FormSigninComponent implements OnInit {
         this.store.dispatch( new loginActions.SigninEmail(form.userEmail));
         this.store.dispatch( new loginActions.SigninPassword(form.userPassword.password));
         this.store.dispatch( new loginActions.SigninPasswordRepeat(form.userPassword.repeat));
-        return of(true);
       }) 
     ).subscribe();
-
   }
 
   public submitSignIn(): void {
