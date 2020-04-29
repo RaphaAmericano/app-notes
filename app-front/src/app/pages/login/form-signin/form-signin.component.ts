@@ -6,8 +6,12 @@ import { NotesValidatorsService } from 'src/app/shared/services/notes-validators
 import { MensagemErroSignin } from 'src/app/shared/models/mensagem-erro-signin';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import { tap, concatMap, debounceTime, delay } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { tap, concatMap, debounceTime, delay, debounce, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { of, combineLatest, forkJoin } from 'rxjs';
+import * as fromLogin from '../state';
+import * as loginActions from '../state/login.actions';
+import * as fromRoot from '../../../state/app.state';
+import { Store, select } from '@ngrx/store';
 
 @Component({
   selector: 'app-form-signin',
@@ -25,22 +29,52 @@ export class FormSigninComponent implements OnInit {
   public signinSucess:boolean = undefined;
   public counter:number = 3000;
 
-  constructor(private formBuilder:FormBuilder, 
+  constructor(private store:Store<fromRoot.State>,
+              private formBuilder:FormBuilder, 
               private http:NoteHttpService, 
               private router:Router,
               private authService: AuthService,
               private noteValidators:NotesValidatorsService ) { }
 
   ngOnInit() {
-    this.signinForm = this.formBuilder.group({
-      userName:[null, [Validators.required, Validators.minLength(3)]],
-      userEmail:[null, [Validators.email,Validators.required], [this.noteValidators.emailCheckValidator(true)]],
-      userPassword: this.formBuilder.group({
-        password:[null, Validators.required],
-        repeat:[null, Validators.required]
-      }, {validator: this.noteValidators.checkMatchPassword('password', 'repeat')}
-      )
-    })
+    this.generateForm();
+    console.log(this.signinForm);
+    combineLatest([
+      this.store.pipe(select(fromLogin.getSigninName)),
+      this.store.pipe(select(fromLogin.getSigninEmail)),
+      this.store.pipe(select(fromLogin.getSigninPassword)),
+      this.store.pipe(select(fromLogin.getSigninPasswordRepeat))
+    ]).pipe(
+      // debounceTime(1000),
+      // distinctUntilChanged(),
+      tap(([name, email, password, repeat]) => {
+        this.signinForm.get('userName').setValue(name);
+        this.signinForm.get('userEmail').setValue(email);
+        this.signinForm.get('userPassword').get('password').setValue(password);
+        this.signinForm.get('userPassword').get('repeat').setValue(repeat);
+      }),
+      tap( password => console.log(password)),
+    ).subscribe(console.log);
+    // forkJoin([
+    //   this.store.pipe(select(fromLogin.getSigninPassword)),
+    //   this.store.pipe(select(fromLogin.getSigninPasswordRepeat))
+    // ]).pipe(
+    //   tap(([password, repeat]) => console.log(password, repeat))
+    // )
+
+    //apenas para debug  
+    this.signinForm.valueChanges.pipe(
+      debounceTime(500),
+      distinctUntilChanged(),
+      tap((form) => {
+        this.store.dispatch( new loginActions.SigninName(form.userName));
+        this.store.dispatch( new loginActions.SigninEmail(form.userEmail));
+        this.store.dispatch( new loginActions.SigninPassword(form.userPassword.password));
+        this.store.dispatch( new loginActions.SigninPasswordRepeat(form.userPassword.repeat));
+        return of(true);
+      }) 
+    ).subscribe();
+
   }
 
   public submitSignIn(): void {
@@ -49,7 +83,6 @@ export class FormSigninComponent implements OnInit {
     user.email = this.signinForm.value.userEmail;
     user.senha = this.signinForm.value.userPassword.password;
     this.http.postNewUser(user).pipe(
-      tap((flag) => console.log(flag)),
       concatMap((flag) => {
         if(flag){
           this.authService.setUserActive(user);
@@ -67,6 +100,18 @@ export class FormSigninComponent implements OnInit {
           this.router.navigate(['board']);
         }
     });
+  }
+
+  private generateForm(): void {
+    this.signinForm = this.formBuilder.group({
+      userName:[null, [Validators.required, Validators.minLength(3)]],
+      userEmail:[null, [Validators.email,Validators.required], [this.noteValidators.emailCheckValidator(true)]],
+      userPassword: this.formBuilder.group({
+        password:[null, Validators.required], //minlength
+        repeat:[null, Validators.required]  //minlength
+      },{validator: this.noteValidators.checkMatchPassword('password', 'repeat')}
+      )
+    })
   }
 
   private resetForm(): void {

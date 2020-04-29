@@ -6,8 +6,8 @@ import { NotesValidatorsService } from 'src/app/shared/services/notes-validators
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { MensagemErro } from 'src/app/shared/models/mensagem-erro';
-import { concatMap, distinctUntilChanged, switchMap, tap, debounceTime  } from 'rxjs/operators';
-import { of, combineLatest } from 'rxjs';
+import { concatMap, distinctUntilChanged, switchMap, tap, debounceTime, map  } from 'rxjs/operators';
+import { of } from 'rxjs';
 import * as fromLogin from '../state'; //index.ts
 import * as loginActions from '../state/login.actions';
 import * as fromRoot from '../../../state/app.state';
@@ -22,7 +22,7 @@ export class FormLoginComponent implements OnInit {
   public loginForm:FormGroup;
   public mensagemErro:MensagemErro = new MensagemErro("Insira seu email", "Insira sua senha");
   constructor(
-        private store:Store<fromRoot.State>,
+              private store:Store<fromRoot.State>,
               private formBuilder:FormBuilder, 
               private service:NoteHttpService, 
               private noteValidators:NotesValidatorsService, 
@@ -31,16 +31,22 @@ export class FormLoginComponent implements OnInit {
 
   ngOnInit() {
     this.generateForm();
-    combineLatest([
-      this.store.pipe(select(fromLogin.getLoginEmail))  
-    ]).pipe(
-      tap(email => console.log(email)),
-      concatMap(([email]) => {
+    this.store.pipe(
+      select(fromLogin.getLoginEmail),
+      concatMap((email) => {
         this.loginForm.get('userEmail').setValue(email);
         return of(email);
       })
-    ).subscribe(console.log);
-    
+    ).subscribe();
+
+    this.store.pipe(
+      select(fromLogin.getLoginPassword),
+      concatMap((password) => {
+        this.loginForm.get('userPassword').setValue(password);
+        return of(password);
+      })
+    ).subscribe();
+    ////
     this.loginForm.get('userEmail').valueChanges.pipe(
       debounceTime(500),
       distinctUntilChanged(),
@@ -50,10 +56,19 @@ export class FormLoginComponent implements OnInit {
         }
       )
     ).subscribe(console.log);
+
+    this.loginForm.get('userPassword').valueChanges.pipe(
+      debounceTime(500),
+      distinctUntilChanged(),
+      switchMap((val) => { 
+          this.store.dispatch(new loginActions.LoginPassword(val));
+          return of(true);
+        }
+      )
+    )
   }
 
   private generateForm(): void {
-
     this.loginForm = this.formBuilder.group({
       userEmail:[null, [Validators.email, Validators.required], [this.noteValidators.emailCheckValidator(false)]],
       userPassword:[null, [Validators.required, Validators.minLength(3)]]
@@ -62,15 +77,12 @@ export class FormLoginComponent implements OnInit {
 
   public submitLogin(): void {
     if(this.loginForm.valid){
-
       let user = new User();
       user.email = this.loginForm.value.userEmail;
       user.senha = this.loginForm.value.userPassword;
-
       this.service.checkEmail(user.email).pipe(
         concatMap((flag => {
           if(flag){
-            console.log('passa o password');
             return this.service.checkUserPassword(user.senha, user.email);
           }else {
             this.loginForm.controls.userEmail.setErrors({'incorrect': true});

@@ -4,5 +4,5 @@ export interface LoginState {
     signinName:string;
     signinEmail:string;
     signinPassword:string;
-    signinPasswordConfirm:string;
+    signinPasswordRepeat:string;
 }
